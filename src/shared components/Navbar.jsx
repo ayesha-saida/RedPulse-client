@@ -1,0 +1,67 @@
+import React from 'react'
+import { Link, NavLink } from 'react-router'
+import Logo from './Logo'
+
+const Navbar = () => {
+  
+  const links = <>
+  <li><NavLink>Donate</NavLink></li>
+  <li><NavLink>Funding</NavLink></li>
+  </>
+  return (
+ <div className="navbar bg-[#eb2c29] text-white shadow-sm">
+  <div className="navbar-start">
+     <Logo />  
+   </div>
+
+     <div className="navbar-center hidden lg:flex">
+    <ul className="menu menu-horizontal px-1 text-2xl">
+       {links}
+    </ul>
+  </div>
+  
+   <div  className="navbar-end">
+     <div className=" flex gap-2 ">
+
+   {/* User Avatar Dropdown */}
+  <div className="dropdown">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        </div>
+      </div>
+      <ul
+        tabIndex="-1"
+        className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-50 mt-3 w-52 p-2 shadow left-1/2 -translate-x-1/2">
+        <li><a>Dashboard</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div>
+
+   {/* Mobile Hamburger Menu Dropdown */}
+   <div className="dropdown lg:hidden"> 
+      <div tabIndex={0} role="button" className="btn btn-ghost">
+      {/*  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg> */}
+        <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
+      </div>
+
+      <ul
+        tabIndex="-1"
+          className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box 
+             z-50 mt-3 w-52 p-2 shadow 
+             left-1/2 -translate-x-1/2">
+
+          {links}
+      </ul>
+  </div>
+
+     </div>
+   </div>
+ 
+</div>
+  )
+}
+
+export default Navbar
