@@ -17,9 +17,9 @@ const SignIn = () => {
   <label className="label">Password</label>
   <input type="password" className="input" placeholder="Password" />
 
-  <button className="btn btn-neutral mt-4">Login</button>
+  <button className="btn bg-[#eb2c29] text-white  mt-4">Login</button>
 
-    <p className='pt-2 text-center text-base-content'>Don't have an account? <Link to={'/signup'} className='text-primary hover:underline hover:text-blue-500'> Register </Link> </p>
+    <p className='pt-2 text-center text-base-content'>Don't have an account? <Link to={'/register'} className='text-primary hover:underline hover:text-blue-500'> Register </Link> </p>
   </fieldset>
     </form>
     </div>

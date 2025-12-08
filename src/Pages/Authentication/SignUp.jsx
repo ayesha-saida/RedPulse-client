@@ -49,9 +49,9 @@ const SignUp = () => {
   <label className="label">Confirm Password</label>
   <input type="password" className="input" placeholder="Confirm Password" />
 
-  <button className="btn btn-neutral mt-4">Sign Up</button>
+  <button className="btn bg-[#eb2c29] text-white mt-4">Register</button>
 
-  <p className='pt-2 text-center text-base-content'>Already have an account? <Link to={'/signin'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
+  <p className='pt-2 text-center text-base-content'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
  </fieldset>
       </form>
     </div>
