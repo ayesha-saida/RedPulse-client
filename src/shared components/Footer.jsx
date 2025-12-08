@@ -17,7 +17,7 @@ const Footer = () => {
   </div>
   </div>
   
-<hr class="border-b-neutral-400  mx-6 lg:my-3 my-2" />
+<hr className="border-b-neutral-400  mx-6 lg:my-3 my-2" />
   <div className='footer footer-center mt-3 sm:mt-0'>
     <p className='px-2 pb-3 text-sm text-gray-300'>Copyright © 2025 - All right reserved by Red Pulse</p>
   </div>
