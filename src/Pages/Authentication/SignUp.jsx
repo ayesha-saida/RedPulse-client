@@ -1,39 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { useSharedStates } from '../../Shared states/SharedStates';
 
 const SignUp = () => {
-  const [bloodGroup, setBloodGroup] = useState([])
-  const [district, setDistrict] = useState([])
-  const [upazila, setUpazila] = useState([])
-
-
-  //load json data
- useEffect( () => {
-  const loadJSON = async () => {
- try{
-   const res1 = await fetch('/bloodgroup.json');
-   const res2 = await  fetch('/district.json');
-   const res3 = await  fetch('/upazila.json');
-
-   const json1 = await res1.json();
-   const json2 = await res2.json();
-   const json3 = await res3.json();
-
-   setBloodGroup(json1)
-   setDistrict(json2)
-   setUpazila(json3)
-
-    // console.log(json1)
-   // console.log(json2)
-  // console.log(json3)
- } 
-   catch (error){
-     console.log(error)
-  }
-}
-   loadJSON()
-
- }, [])
+    const { bloodGroup, district, upazila } = useSharedStates();
 
   return (
      <div className='w-11/12 mx-auto'>
