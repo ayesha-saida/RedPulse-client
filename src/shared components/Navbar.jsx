@@ -1,8 +1,21 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router'
+import React, { useContext } from 'react'
+import { Link, NavLink, useNavigate } from 'react-router'
 import Logo from './Logo'
+import { AuthContext } from '../Pages/Context/AuthProvider'
 
 const Navbar = () => {
+      const navigation = useNavigate()
+      const {user, logOut } = useContext(AuthContext);
+
+       const handleLogOut = () => {
+        logOut().then(() => {
+           alert('SignOut from Red Pulse')
+          })
+        .catch(error => {
+           console.log(error)
+       });
+            }
+
   
   const links = <>
   <li><NavLink>Donate</NavLink></li>
@@ -24,7 +37,8 @@ const Navbar = () => {
      <div className=" flex gap-2 ">
 
    {/* User Avatar Dropdown */}
-  <div className="dropdown">
+  {
+      user? <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
@@ -36,9 +50,11 @@ const Navbar = () => {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-50 mt-3 w-52 p-2 shadow left-1/2 -translate-x-1/2">
         <li><a>Dashboard</a></li>
-        <li><a>Logout</a></li>
+        <li><a onClick={handleLogOut}>Logout</a></li>
       </ul>
-    </div>
+    </div> : ''
+  }
+  
 
    {/* Mobile Hamburger Menu Dropdown */}
    <div className="dropdown lg:hidden"> 

@@ -1,32 +1,22 @@
-import { Link } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { useSharedStates } from '../../Shared states/SharedStates';
 import { useForm } from "react-hook-form"
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../Context/AuthProvider';
+import axios from 'axios';
+ 
 
 const SignUp = () => {
+   const navigate = useNavigate()
+  const location = useLocation()
+  console.log('In register page', location)
+
     const { bloodGroup, district, upazila } = useSharedStates();
 
     const { register, handleSubmit, watch, setValue, formState:{ errors }} = useForm()
  
-  const onSubmit = async (data) => { 
-    console.log('After Register:', data)
+    const {registerUser, updateUserProfile} = useContext(AuthContext);
 
-    // Get the file from the form
-      const imageFile = data.avatar[0];
-      const formData = new FormData();
-      formData.append("image", imageFile);
-
-         // Upload to ImgBB
-     /* const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      ); */
-
-
-}
  // Watch selected district
   const selectedDistrict = watch("district");
 
@@ -43,12 +33,53 @@ const SignUp = () => {
     // Watch the password field value
   const password = watch("password");
 
+    const registerSubmit = async (data) => { 
+    console.log('After Register:', data)
+    const imageFile = data.avatar[0]
+
+    registerUser(data.email, data.password).then(result => {
+    console.log(result.user)
+
+   // Get the file from the form
+         //  const imageFile = data.avatar[0];
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+       //send the photo to store and get the url
+  const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGBB_API_KEY}`
+  axios.post( img_API_URL , formData)
+  .then(res => {
+    console.log('after image upload', res.data.data.url)
+  
+    //update user profile in firebase
+    const userProfile = {
+      displayName: data.name,
+      photoURL: res.data.data.url,
+    }
+
+     updateUserProfile(userProfile)
+  .then(() => {
+    console.log('User Profile updated done')
+      navigate(location.state || '/')
+  })
+  .catch(error => console.log(error))
+  })
+
+    alert('Registration Successfull')
+     navigate('/')
+
+    }).catch(error => {
+  console.log(error)
+   })
+    
+}
+
   return (
      <div className='w-11/12 mx-auto'>
         <h1 className='text-2xl text-center font-semibold pt-7'>Welcome! Please Register to Access Our Blood Donation Services</h1>
    
   <div className='flex flex-col justify-center items-center py-5'> 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(registerSubmit)}>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
    
        {/*name field */}
@@ -124,7 +155,7 @@ const SignUp = () => {
         <span className="text-red-500">{errors.confirmPassword.message}</span>
       )}
 
-  <button type='submit' className="btn bg-[#eb2c29] text-white mt-4">Register</button>
+  <button className="btn bg-[#eb2c29] text-white mt-4">Register</button>
 
   <p className='pt-2 text-center text-base-content'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
  </fieldset>
