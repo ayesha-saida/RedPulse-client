@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../Context/AuthProvider';
 import axios from 'axios';
+import { successToast } from '../../shared components/ToastContainer';
  
 
 const SignUp = () => {
@@ -65,7 +66,7 @@ const SignUp = () => {
   .catch(error => console.log(error))
   })
 
-    alert('Registration Successfull')
+    successToast('Registration Successfull')
      navigate('/')
 
     }).catch(error => {

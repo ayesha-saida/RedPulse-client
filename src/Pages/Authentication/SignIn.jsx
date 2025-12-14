@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { AuthContext } from '../Context/AuthProvider'
+import { successToast } from '../../shared components/ToastContainer'
 
 const SignIn = () => {
     const {loginUser} = useContext(AuthContext)
@@ -16,7 +17,7 @@ const SignIn = () => {
      loginUser(data.email, data.password)
      .then(result => {
      console.log(result.user)
-    alert('login succesfull')
+     successToast('login succesfull')
      navigate(location.state || '/')
 
     }).catch(error => {

@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router'
 import Logo from './Logo'
 import { AuthContext } from '../Pages/Context/AuthProvider'
+import { defaultToast } from './ToastContainer'
 
 const Navbar = () => {
       const navigation = useNavigate()
@@ -9,7 +10,7 @@ const Navbar = () => {
 
        const handleLogOut = () => {
         logOut().then(() => {
-           alert('SignOut from Red Pulse')
+           defaultToast('SignOut from Red Pulse')
           })
         .catch(error => {
            console.log(error)
