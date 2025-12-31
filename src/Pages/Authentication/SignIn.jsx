@@ -26,16 +26,16 @@ const SignIn = () => {
   }
 
   return (
-    <div className='card bg-base-100 w-full mx-auto max-w-sm  '>
+    <div className='card bg-base-100 w-full mx-auto max-w-sm '>
 
      <h1 className='text-2xl text-center font-semibold pt-7 px-5'>Welcome to Red Pulse</h1>
     
     <div className='flex flex-col justify-center items-center py-5'>
-   <form className='card-body' onSubmit={handleSubmit(handleLogin)}>
-    <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+   <form className='text-[#f00505] bg-[#ffdddd]' onSubmit={handleSubmit(handleLogin)}>
+    <fieldset className="fieldset border-2 border-dashed border-[#f00505] rounded w-xs p-4">
 
   {/*email */}
-  <label className="label">Email</label>
+  <label className="text-xs font-bold">Email</label>
   <input type="email"  {...register('email', {required: true})}  className="input" placeholder="Email" />
 
    {
@@ -43,15 +43,15 @@ const SignIn = () => {
   }
 
   {/*password*/}
-  <label className="label">Password</label>
+  <label className="text-xs font-bold">Password</label>
   <input type="password" {...register('password', {required: true, 
     minLength:6 })}  className="input" placeholder="Password" />
 
    {errors.password?.type ==='minLength' && <span className='text-red-500'>Password must be 6 characters or longer</span>}
 
-  <button className="btn bg-[#eb2c29] text-white  mt-4">Login</button>
+  <button className="btn bg-[#eb2c29] text-white mt-4">Login</button>
 
-    <p className='pt-2 text-center text-base-content'>Don't have an account? <Link to={'/register'} className='text-primary hover:underline hover:text-blue-500'> Register </Link> </p>
+    <p className='pt-2 text-center'>Don't have an account? <Link to={'/register'} className='text-primary hover:underline hover:text-blue-500'> Register </Link> </p>
   </fieldset>
     </form>
     </div>

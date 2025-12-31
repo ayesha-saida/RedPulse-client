@@ -48,7 +48,7 @@ const SignUp = () => {
 
        //send the photo to store and get the url
   const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGBB_API_KEY}`
-  axios.post( img_API_URL , formData)
+ axios.post( img_API_URL , formData)
   .then(res => {
     console.log('after image upload', res.data.data.url)
   
@@ -77,14 +77,14 @@ const SignUp = () => {
 
   return (
      <div className='w-11/12 mx-auto'>
-        <h1 className='text-2xl text-center font-semibold pt-7'>Welcome! Please Register to Access Our Blood Donation Services</h1>
+        <h1 className='text-2xl text-center font-semibold pt-7 px-2 italic -mx-2'>Welcome! Please Register to Access Our Blood Donation Services</h1>
    
   <div className='flex flex-col justify-center items-center py-5'> 
-      <form onSubmit={handleSubmit(registerSubmit)}>
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+      <form onSubmit={handleSubmit(registerSubmit)} className='text-[#f00505] bg-[#ffdddd]'>
+        <fieldset className="fieldset border-2 border-dashed border-[#f00505] rounded w-xs p-4">
    
        {/*name field */}
-  <label className="label">Name</label>
+  <label className="text-xs font-bold">Name</label>
   <input type="text" className="input" {...register("name",{ required: true, maxLength: 20, minLength:4 })} placeholder="Enter your Name" required />
 
     {errors.name?.type==='required' && <span className='text-red-500'>Name is required</span>}
@@ -92,20 +92,20 @@ const SignUp = () => {
     {errors.name?.type ==='maxLength' && <span className='text-red-500'>Name must be in 20 characters</span>}
  
       {/*email field */}
-  <label className="label">Email</label>
+  <label className="text-xs font-bold">Email</label>
   <input type="email"  {...register('email', { required: true })} className="input" placeholder="Email" required />
 
    {errors.email?.type==='required' && <span className='text-red-500'>Email is required</span>}
    
       {/*photo image / user avatar field */}
-  <label className="label">Photo</label>
+  <label className="text-xs font-bold">Photo</label>
   <input type="file"
    className="file-input"
    {...register("avatar", { required: "Avatar is required" })} />
 
 
       {/*blood group selection field */}
-  <label className="label">Blood Group</label>
+  <label className="text-xs font-bold">Blood Group</label>
   <select  {...register("group")}   className="select">  
   <option value=''> Select </option>
    { 
@@ -114,7 +114,7 @@ const SignUp = () => {
 </select>
 
       {/*district group selection field */}
-  <label className="label">District</label>
+  <label className="text-xs font-bold">District</label>
   <select  {...register("district")}   className="select">
   <option value=''> Select </option>
   { district.map((district)=> <option key={district.id} value={district.id}>{district.name}</option>)
@@ -122,7 +122,7 @@ const SignUp = () => {
 </select>
 
       {/*upazila group selection field */}
-  <label className="label">Upazila</label>
+  <label className="text-xs font-bold">Upazila</label>
   <select  {...register("upazila")}  className="select" disabled={!selectedDistrict}>
   <option value=''> Select </option>
     { filteredUpazilas.map( (upazila) => <option key={upazila.id} value={upazila.id}>
@@ -131,7 +131,7 @@ const SignUp = () => {
 </select>
 
         {/*password field */}
-  <label className="label">Password</label>
+  <label className="text-xs font-bold">Password</label>
   <input type="password" {...register('password', { 
     required: true,
     minLength:6,
@@ -144,7 +144,7 @@ const SignUp = () => {
      {errors.password?.type ==='pattern' && <span className='text-red-500'>Password must have at least one uppercase, at least one lowercase, at least one number and at least one special characters.  </span>}
 
        {/*confirm password field */}
-  <label className="label">Confirm Password</label>
+  <label className="text-xs font-bold">Confirm Password</label>
   <input type="password"  {...register("confirmPassword", {
           required: true,
           validate: (value) =>
@@ -158,7 +158,7 @@ const SignUp = () => {
 
   <button className="btn bg-[#eb2c29] text-white mt-4">Register</button>
 
-  <p className='pt-2 text-center text-base-content'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
+  <p className='pt-2 text-center'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
  </fieldset>
       </form>
     </div>
