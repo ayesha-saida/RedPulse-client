@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form"
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../Context/AuthProvider';
 import axios from 'axios';
-import { successToast } from '../../shared components/ToastContainer';
+import { defaultToast, successToast } from '../../shared components/ToastContainer';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
  
 
 const SignUp = () => {
@@ -16,7 +17,9 @@ const SignUp = () => {
 
     const { register, handleSubmit, watch, setValue, formState:{ errors }} = useForm()
  
-    const {registerUser, updateUserProfile} = useContext(AuthContext);
+    const {registerUser, updateUserProfile } = useContext(AuthContext);
+  
+     const axiosSecure = useAxiosSecure()
 
  // Watch selected district
   const selectedDistrict = watch("district");
@@ -32,48 +35,57 @@ const SignUp = () => {
   }, [selectedDistrict, setValue])
 
     // Watch the password field value
-  const password = watch("password");
+    const password = watch("password");
 
     const registerSubmit = async (data) => { 
-    console.log('After Register:', data)
-    const imageFile = data.avatar[0]
+   try {
+           const imageFile = data.avatar[0]
 
-    registerUser(data.email, data.password).then(result => {
-    console.log(result.user)
+     // 1. Firebase register
+    const authRes = await registerUser(data.email, data.password)
 
-   // Get the file from the form
-         //  const imageFile = data.avatar[0];
-      const formData = new FormData();
-      formData.append("image", imageFile);
+    // 2. Upload image
+    const formData = new FormData()
+    formData.append("image", imageFile)
 
-       //send the photo to store and get the url
-  const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGBB_API_KEY}`
- axios.post( img_API_URL , formData)
-  .then(res => {
-    console.log('after image upload', res.data.data.url)
-  
-    //update user profile in firebase
+    const imgRes = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
+      formData
+    )  
+
+      const photoURL = imgRes.data.data.url
+
+    // 3. Save user to DB
     const userProfile = {
-      displayName: data.name,
-      photoURL: res.data.data.url,
+      name: data.name,
+      email: data.email,
+      photoURL,
+      bloodGroup: data.group,
+      district: data.district,
+      upazila: data.upazila,
     }
 
-     updateUserProfile(userProfile)
-  .then(() => {
-    console.log('User Profile updated done')
-      navigate(location.state || '/')
-  })
-  .catch(error => console.log(error))
-  })
+     const dbRes = await axiosSecure.post('/users', userProfile)
 
-    successToast('Registration Successfull')
-     navigate('/')
+    if (dbRes.data.message === 'user exists') {
+      return alert('User already exists')
+    }
 
-    }).catch(error => {
-  console.log(error)
-   })
-    
-}
+    // 4. Update Firebase profile
+    await updateUserProfile({
+      displayName: data.name,
+      photoURL,
+    })
+
+       successToast('Registration Successful')
+       navigate(location.state || '/')
+
+   }
+     catch (error) {
+          console.error(error)
+      defaultToast('Registration failed')
+     }  
+  }
 
   return (
      <div className='w-11/12 mx-auto'>
@@ -87,15 +99,15 @@ const SignUp = () => {
   <label className="text-xs font-bold">Name</label>
   <input type="text" className="input" {...register("name",{ required: true, maxLength: 20, minLength:4 })} placeholder="Enter your Name" required />
 
-    {errors.name?.type==='required' && <span className='text-red-500'>Name is required</span>}
-    {errors.name?.type ==='minLength' && <span className='text-red-500'>Name must be 4 characters or longer</span>}
-    {errors.name?.type ==='maxLength' && <span className='text-red-500'>Name must be in 20 characters</span>}
+    {errors.name?.type==='required' && <span className='text-[#6e1515]'>Name is required</span>}
+    {errors.name?.type ==='minLength' && <span className='text-[#6e1515]'>Name must be 4 characters or longer</span>}
+    {errors.name?.type ==='maxLength' && <span className='text-[#6e1515]'>Name must be in 20 characters</span>}
  
       {/*email field */}
   <label className="text-xs font-bold">Email</label>
   <input type="email"  {...register('email', { required: true })} className="input" placeholder="Email" required />
 
-   {errors.email?.type==='required' && <span className='text-red-500'>Email is required</span>}
+   {errors.email?.type==='required' && <span className='text-[#6e1515]'>Email is required</span>}
    
       {/*photo image / user avatar field */}
   <label className="text-xs font-bold">Photo</label>
@@ -139,9 +151,9 @@ const SignUp = () => {
    })} 
     className="input" placeholder="Password" />
      
-     {errors.password?.type ==='required' && <span className='text-red-500'>Password is required</span>}
-     {errors.password?.type ==='minLength' && <span className='text-red-500'>Password must be 6 characters or longer</span>}
-     {errors.password?.type ==='pattern' && <span className='text-red-500'>Password must have at least one uppercase, at least one lowercase, at least one number and at least one special characters.  </span>}
+     {errors.password?.type ==='required' && <span className='text-[#6e1515]'>Password is required</span>}
+     {errors.password?.type ==='minLength' && <span className='text-[#6e1515]'>Password must be 6 characters or longer</span>}
+     {errors.password?.type ==='pattern' && <span className='text-[#6e1515]'>Password must have at least one uppercase, at least one lowercase, at least one number and at least one special characters.  </span>}
 
        {/*confirm password field */}
   <label className="text-xs font-bold">Confirm Password</label>
@@ -153,7 +165,7 @@ const SignUp = () => {
      className="input" placeholder="Confirm Password" />
 
   {  errors.confirmPassword && (
-        <span className="text-red-500">{errors.confirmPassword.message}</span>
+        <span className="text-[#6e1515]">{errors.confirmPassword.message}</span>
       )}
 
   <button className="btn bg-[#eb2c29] text-white mt-4">Register</button>

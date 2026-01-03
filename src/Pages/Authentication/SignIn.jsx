@@ -39,7 +39,7 @@ const SignIn = () => {
   <input type="email"  {...register('email', {required: true})}  className="input" placeholder="Email" />
 
    {
-   errors.email?.type === 'required' && <span className='text-red-500'> Email is required</span>
+   errors.email?.type === 'required' && <span className='text-[#6e1515]'> Email is required</span>
   }
 
   {/*password*/}
@@ -47,7 +47,7 @@ const SignIn = () => {
   <input type="password" {...register('password', {required: true, 
     minLength:6 })}  className="input" placeholder="Password" />
 
-   {errors.password?.type ==='minLength' && <span className='text-red-500'>Password must be 6 characters or longer</span>}
+   {errors.password?.type ==='minLength' && <span className='text-[#6e1515]'>Password must be 6 characters or longer</span>}
 
   <button className="btn bg-[#eb2c29] text-white mt-4">Login</button>
 
