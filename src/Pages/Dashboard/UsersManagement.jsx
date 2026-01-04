@@ -3,12 +3,13 @@ import { FaUserAltSlash, FaUserCheck } from 'react-icons/fa';
 import { AuthContext } from '../Context/AuthProvider';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 const UsersManagement = () => {
    const {user} = useContext(AuthContext)
    const axiosSecure = useAxiosSecure()
 
-   const {data: users = [] } = useQuery({
+   const {refetch, data: users = [] } = useQuery({
     queryKey: ['users'],
     queryFn: async() => {
       const res = await 
@@ -17,12 +18,44 @@ const UsersManagement = () => {
     }
    })
 
+   const  updateStatusActive = (user) => {
+    const statusInfo = { status: 'active'}
+      axiosSecure.patch(`/users/${user._id}/status`, statusInfo)
+        .then(res => {
+                console.log(res.data);
+           if (res.data.modifiedCount) {
+                   refetch();
+              Swal.fire({
+              title: `${user.name} is Active now`,
+               icon: "success",
+              draggable: true
+        });
+           }
+        })
+   }
+
+   const  updateStatusBlocked = (user) => {
+     const statusInfo = { status: 'block'}
+     axiosSecure.patch(`/users/${user._id}/status`, statusInfo)
+        .then(res => {
+                console.log(res.data);
+           if (res.data.modifiedCount) {
+                   refetch();
+              Swal.fire({
+              title: `${user.name} is Blocked`,
+               icon: "success",
+              draggable: true
+        });
+           }
+        })
+   }
+
   return (
-    <div>
+    <div className='w-11/12 mx-auto'>
         <h2 className='text-4xl py-4'>Total Users: {users.length} </h2>    
         
         <div className="overflow-x-auto">
-  <table className="table">
+  <table className="table border">
 
     <thead>
       <tr>
@@ -73,10 +106,15 @@ const UsersManagement = () => {
         <td>
           {
             user.status === 'active' ?
-            <button>
+            <button 
+             onClick={() => updateStatusBlocked(user)}
+              className='btn bg-gray-500'>             
                   <FaUserAltSlash/>
             </button>   :  
-             <button> 
+
+             <button
+              onClick={() => updateStatusActive(user)}
+               className='btn bg-green-500'>    
                   <FaUserCheck />
             </button>
           }       

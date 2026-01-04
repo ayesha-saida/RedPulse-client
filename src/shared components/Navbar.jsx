@@ -50,8 +50,8 @@ const Navbar = () => {
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-50 mt-3 w-52 p-2 shadow left-1/2 -translate-x-1/2">
-        <li><a>Dashboard</a></li>
-        <li><a onClick={handleLogOut}>Logout</a></li>
+        <Link  to={'/dashboard'}>Dashboard</Link>
+        <Link onClick={handleLogOut}>Logout</Link>
       </ul>
     </div> : ''
   }

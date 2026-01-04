@@ -28,7 +28,7 @@ const SignIn = () => {
   return (
     <div className='card bg-base-100 w-full mx-auto max-w-sm '>
 
-     <h1 className='text-2xl text-center font-semibold pt-7 px-5'>Welcome to Red Pulse</h1>
+     <h1 className='text-2xl text-center font-semibold pt-7 px-5 italic'>Welcome to Red Pulse</h1>
     
     <div className='flex flex-col justify-center items-center py-5'>
    <form className='text-[#f00505] bg-[#ffdddd]' onSubmit={handleSubmit(handleLogin)}>
