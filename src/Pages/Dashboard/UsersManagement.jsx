@@ -50,6 +50,38 @@ const UsersManagement = () => {
         })
    }
 
+   const updateUserRole = (e,user) => {
+         const roleInfo = e.target.value; // the new selected role
+    //  console.log("Updating", user.name, "to role:", roleInfo);
+
+         axiosSecure.patch(`/users/${user._id}/role`, {role: roleInfo})   // send role as object
+              .then(res => {
+                console.log(res.data);
+             if (res.data.modifiedCount) {
+                   refetch();
+
+                Swal.fire({
+                     title: "Are you sure?",
+                     text: `You want to update ${user.name} to ${roleInfo}`,
+                     icon: "warning",
+                     showCancelButton: true,
+                     confirmButtonColor: "#3085d6",
+                     cancelButtonColor: "#d33",
+                     confirmButtonText: "Yes"
+                         }).then((result) => {
+                      if (result.isConfirmed) {
+                       Swal.fire({
+                    title: `${user.name} marked as ${roleInfo}`,
+                    icon: "success"
+                             });
+                        }
+                  });
+           }
+        })     
+   }
+
+
+
   return (
     <div className='w-11/12 mx-auto'>
         <h2 className='text-4xl py-4'>Total Users: {users.length} </h2>    
@@ -94,8 +126,12 @@ const UsersManagement = () => {
         <td className='font-semibold'>{user.name}</td>
 
         <td>
-           <select  className="select">
-            <option> {user.role} </option>
+           <select  className="select" defaultValue={user.role}
+           onChange={(e) => updateUserRole(e,user)}
+           >    
+           <option value={'donor'}> donor </option> 
+           <option value={'volunteer'}> volunteer</option> 
+           <option value={'admin'}> admin </option>         
             </select>
         </td>
 
