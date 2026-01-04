@@ -80,7 +80,6 @@ const UsersManagement = () => {
         <th>Name</th>
         <th>Role</th>
         <th>Status</th>
-        <th>Action</th>
       </tr>
     </thead>
 

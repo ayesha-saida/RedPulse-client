@@ -7,6 +7,7 @@ import SignIn from "../Pages/Authentication/SignIn";
 import SignUp from "../Pages/Authentication/SignUp";
 import Search from "../Pages/search/Search";
 import UsersManagement from "../Pages/Dashboard/UsersManagement";
+import Profile from "../Pages/Dashboard/Profile";
 
 
 export const router = createBrowserRouter([
@@ -47,7 +48,11 @@ export const router = createBrowserRouter([
         {
             path: 'all-users',
             element: <UsersManagement /> 
-        }
+        } ,
+        {
+            path: 'profile',
+            element: <Profile />
+        } ,
 
     ]
   },
