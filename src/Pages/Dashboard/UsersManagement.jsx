@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { FaUserAltSlash, FaUserCheck } from 'react-icons/fa';
 import { AuthContext } from '../Context/AuthProvider';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -17,38 +16,6 @@ const UsersManagement = () => {
         return res.data
     }
    })
-
-   const  updateStatusActive = (user) => {
-    const statusInfo = { status: 'active'}
-      axiosSecure.patch(`/users/${user._id}/status`, statusInfo)
-        .then(res => {
-                console.log(res.data);
-           if (res.data.modifiedCount) {
-                   refetch();
-              Swal.fire({
-              title: `${user.name} is Active now`,
-               icon: "success",
-              draggable: true
-        });
-           }
-        })
-   }
-
-   const  updateStatusBlocked = (user) => {
-     const statusInfo = { status: 'block'}
-     axiosSecure.patch(`/users/${user._id}/status`, statusInfo)
-        .then(res => {
-                console.log(res.data);
-           if (res.data.modifiedCount) {
-                   refetch();
-              Swal.fire({
-              title: `${user.name} is Blocked`,
-               icon: "success",
-              draggable: true
-        });
-           }
-        })
-   }
 
    const updateUserRole = (e,user) => {
          const roleInfo = e.target.value; // the new selected role
@@ -80,7 +47,22 @@ const UsersManagement = () => {
         })     
    }
 
+     const  updateUsersStatus = (e, user) => {
+     const statusInfo = e.target.value
 
+     axiosSecure.patch(`/users/${user._id}/status`,{ status: statusInfo})
+        .then(res => {
+                console.log(res.data);
+           if (res.data.modifiedCount) {
+                   refetch();
+              Swal.fire({
+              title: `${user.name} is ${statusInfo}`,
+               icon: "success",
+              draggable: true
+        });
+           }
+        })
+   }
 
   return (
     <div className='w-11/12 mx-auto'>
@@ -129,36 +111,23 @@ const UsersManagement = () => {
            <select  className="select" defaultValue={user.role}
            onChange={(e) => updateUserRole(e,user)}
            >    
-           <option value={'donor'}> donor </option> 
-           <option value={'volunteer'}> volunteer</option> 
-           <option value={'admin'}> admin </option>         
+           <option value={'donor'}> Donor </option> 
+           <option value={'volunteer'}> Volunteer</option> 
+           <option value={'admin'}> Admin </option>         
             </select>
         </td>
 
         <td>
-           {user.status} 
-        </td>
-        
-        <td>
-          {
-            user.status === 'active' ?
-            <button 
-             onClick={() => updateStatusBlocked(user)}
-              className='btn bg-gray-500'>             
-                  <FaUserAltSlash/>
-            </button>   :  
-
-             <button
-              onClick={() => updateStatusActive(user)}
-               className='btn bg-green-500'>    
-                  <FaUserCheck />
-            </button>
-          }       
-        </td>
-      </tr>)
-      }  
-     
-
+           <select  className="select" defaultValue={user.status}
+           onChange={(e) => updateUsersStatus(e,user)}
+           >    
+           <option value={'active'}> Active </option> 
+           <option value={'Block'}> Block </option>         
+            </select>
+        </td>  
+      </tr> 
+      )}  
+  
     </tbody>
   </table>
 </div>   
