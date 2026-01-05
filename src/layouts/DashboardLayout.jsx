@@ -1,7 +1,8 @@
 import React from 'react'
-import { FaUsers } from 'react-icons/fa'
+import { FaUser, FaUsers } from 'react-icons/fa'
 import { MdHomeFilled } from 'react-icons/md'
 import { Link, Outlet } from 'react-router'
+import DashboardBanner from '../shared components/DashboardBanner'
 
 const DashboardLayout = () => {
   return (
@@ -32,7 +33,8 @@ const DashboardLayout = () => {
     </nav>
 
     {/* Page content here */}
-   <Outlet />
+    
+     <Outlet />
 
   </div>
 
@@ -46,6 +48,13 @@ const DashboardLayout = () => {
           <Link to={'/'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Home">
           <MdHomeFilled />
           <span className="is-drawer-close:hidden"> Home </span> 
+         </Link>
+          </li>
+
+         <li>         
+          <Link to={'/dashboard/profile'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile">
+          <FaUser />
+          <span className="is-drawer-close:hidden"> Profile </span> 
          </Link>
           </li>
 
