@@ -3,10 +3,28 @@ import { Link, NavLink, useNavigate } from 'react-router'
 import Logo from './Logo'
 import { AuthContext } from '../Pages/Context/AuthProvider'
 import { defaultToast } from './ToastContainer'
+import { useQuery } from '@tanstack/react-query'
 
 const Navbar = () => {
       const navigation = useNavigate()
       const {user, logOut } = useContext(AuthContext);
+
+      const {refetch, data: users = [] } = useQuery({
+      queryKey: ['users', user?.email],
+      enabled: !!user?.email,  
+      queryFn: async() => {
+        const res = await 
+        axiosSecure.get("/users", {
+          params: { email: user.email }
+        })
+          return res.data
+      }
+     })
+
+     const currentUser = users[0];
+
+  if (!currentUser) return <p className='text-red-500'>No user data found</p>;
+    
 
        const handleLogOut = () => {
         logOut().then(() => {
@@ -16,7 +34,6 @@ const Navbar = () => {
            console.log(error)
        });
             }
-
   
   const links = <>
   <li><NavLink>Donate</NavLink></li>
@@ -43,8 +60,9 @@ const Navbar = () => {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            src={currentUser.photoURL}
+            alt="current user avatar"
+            />
         </div>
       </div>
       <ul
