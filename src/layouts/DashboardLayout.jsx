@@ -33,7 +33,7 @@ const DashboardLayout = () => {
     </nav>
 
     {/* Page content here */}
-    
+    <DashboardBanner /> 
      <Outlet />
 
   </div>

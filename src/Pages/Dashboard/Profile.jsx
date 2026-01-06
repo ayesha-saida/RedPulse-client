@@ -105,11 +105,6 @@ const Profile = () => {
 
   return (
     <div className='w-11/12 mx-auto'>
-      <div className='py-5'>
-          <DashboardBanner  />
-      </div>
-
-
        <form className="max-w-sm mx-auto space-y-4 border-[#f00505]  p-5 rounded text-[#f00505] bg-[#ffc8d1] ">        
        <div className='mb-2 text-right'>
         {!isEditing ? (
