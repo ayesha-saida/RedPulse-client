@@ -1,15 +1,17 @@
 import React, { useContext } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import Logo from './Logo'
 import { AuthContext } from '../Pages/Context/AuthProvider'
 import { defaultToast } from './ToastContainer'
 import { useQuery } from '@tanstack/react-query'
+import useAxiosSecure from '../Hooks/useAxiosSecure'
+ 
 
 const Navbar = () => {
-      const navigation = useNavigate()
       const {user, logOut } = useContext(AuthContext);
+      const axiosSecure = useAxiosSecure()
 
-      const {refetch, data: users = [] } = useQuery({
+      const { data: users = [] } = useQuery({
       queryKey: ['users', user?.email],
       enabled: !!user?.email,  
       queryFn: async() => {
@@ -23,7 +25,11 @@ const Navbar = () => {
 
      const currentUser = users[0];
 
-  if (!currentUser) return <p className='text-red-500'>No user data found</p>;
+ if (!currentUser) {
+  console.log('No user data found') } 
+  else {
+
+  }  console.log('user data found') 
     
 
        const handleLogOut = () => {
@@ -56,11 +62,11 @@ const Navbar = () => {
 
    {/* User Avatar Dropdown */}
   {
-      user? <div className="dropdown">
+     user && currentUser && (<div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
-            src={currentUser.photoURL}
+            src={currentUser?.photoURL}
             alt="current user avatar"
             />
         </div>
@@ -71,7 +77,7 @@ const Navbar = () => {
         <Link  to={'/dashboard/profile'}>Dashboard</Link>
         <Link onClick={handleLogOut}>Logout</Link>
       </ul>
-    </div> : ''
+    </div> )
   }
   
 
