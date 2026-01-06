@@ -5,6 +5,7 @@ import { AuthContext } from '../Pages/Context/AuthProvider'
 import { defaultToast } from './ToastContainer'
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../Hooks/useAxiosSecure'
+import Loading from './Loading'
  
 
 const Navbar = () => {
@@ -25,13 +26,8 @@ const Navbar = () => {
 
      const currentUser = users[0];
 
- if (!currentUser) {
-  console.log('No user data found') } 
-  else {
-
-  }  console.log('user data found') 
+   if (!currentUser) return <Loading /> 
     
-
        const handleLogOut = () => {
         logOut().then(() => {
            defaultToast('SignOut from Red Pulse')

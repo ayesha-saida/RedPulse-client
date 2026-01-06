@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import Swal from 'sweetalert2'
 import { useSharedStates } from '../../Shared states/SharedStates'
+import { FaRegEdit, FaRegSave } from 'react-icons/fa'
+import Loading from '../../shared components/Loading'
 
 const Profile = () => {
   const {user} = useContext(AuthContext)
@@ -47,9 +49,14 @@ const Profile = () => {
        }
       }, [currentUser])
 
-    if (!user)  return <p>User not logged in</p>;
-    if (!currentUser) return <p className='text-red-500'>No user data found</p>;
-    
+    if (!user)  return console.log('User not logged in')
+    if (!currentUser) return (
+     <>
+       {console.log('No user data found')}
+         <Loading />
+     </>
+    )
+
 
   // find district & upazila's name using their id
         const districtName = district.find(
@@ -103,24 +110,24 @@ const Profile = () => {
       </div>
 
 
-       <form className="max-w-sm mx-auto space-y-4 border p-4 rounded">        
+       <form className="max-w-sm mx-auto space-y-4 border-[#f00505]  p-5 rounded text-[#f00505] bg-[#ffc8d1] ">        
        <div className='mb-2 text-right'>
         {!isEditing ? (
-          <button onClick={handleEdit}>Edit</button>
+          <button onClick={handleEdit}> <FaRegEdit /> </button>
         ) : (
-          <button onClick={handleSave}>Save</button>
+          <button onClick={handleSave}> <FaRegSave /></button>
         )}
       </div>
  
      <div>
         <label className="block mb-2.5 text-sm font-medium text-heading">Name</label>
         <input name='name' type="text" value={currentUser.name} onChange={handleChange} disabled={!isEditing} 
-           className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" />
+           className="input" />
     </div>
 
     <div>
         <label  className="block mb-2.5 text-sm font-medium text-heading">Email</label>
-        <input type="text" className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"  
+        <input type="text" className="input"  
          value={currentUser.email}   readOnly />
     </div>
 
@@ -131,7 +138,7 @@ const Profile = () => {
                 value={formData.district}
                 onChange={handleChange}
                 disabled={!isEditing}  
-                 className="bg-neutral-secondary-medium border border-default-medium text-heading text-base rounded focus:ring-brand focus:border-brand block w-full px-4 py-3.5 shadow-xs placeholder:text-body"                               >
+                 className="input"                               >
          <option value="">{districtName}</option>
           {district.map(d => (
            <option key={d.id} value={d.id}>{d.name}</option>
@@ -147,7 +154,7 @@ const Profile = () => {
                  value={formData.upazila}
                  onChange={handleChange}
                  disabled={!isEditing } 
-                  className="bg-neutral-secondary-medium border border-default-medium text-heading text-base rounded focus:ring-brand focus:border-brand block w-full px-4 py-3.5 shadow-xs placeholder:text-body" 
+                  className="input" 
                     >
         <option value=""> {upazilaName}</option>
          {upazila.filter(u => u.district_id === formData.district).map(u => (
@@ -164,14 +171,13 @@ const Profile = () => {
             value={formData.bloodGroup}
             onChange={handleChange}
             disabled={!isEditing || !formData.bloodGroup}
-            className="bg-neutral-secondary-medium border border-default-medium text-heading text-base rounded focus:ring-brand focus:border-brand block w-full px-4 py-3.5 shadow-xs placeholder:text-body" 
+            className="input"
           >
              <option value="">{formData.bloodGroup}</option>
          {(bloodGroup).map(b => (
         <option key={b.id} value={b.blood_group}>{b.blood_group}</option>
         ))}
        
-
             </select>
     </div>        
   </form>
