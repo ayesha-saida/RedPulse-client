@@ -12,7 +12,7 @@ const Navbar = () => {
       const {user, logOut } = useContext(AuthContext);
       const axiosSecure = useAxiosSecure()
 
-      const { data: users = [] } = useQuery({
+      const { data: users = [], isLoading } = useQuery({
       queryKey: ['users', user?.email],
       enabled: !!user?.email,  
       queryFn: async() => {
@@ -25,8 +25,6 @@ const Navbar = () => {
      })
 
      const currentUser = users[0];
-
-   if (!currentUser) return <Loading /> 
     
        const handleLogOut = () => {
         logOut().then(() => {
@@ -56,9 +54,12 @@ const Navbar = () => {
    <div  className="navbar-end">
      <div className=" flex gap-2 ">
 
+   {user && isLoading && <Loading />}
+
    {/* User Avatar Dropdown */}
   {
-     user && currentUser && (<div className="dropdown">
+     user && !isLoading && currentUser && (
+     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
@@ -80,7 +81,6 @@ const Navbar = () => {
    {/* Mobile Hamburger Menu Dropdown */}
    <div className="dropdown lg:hidden"> 
       <div tabIndex={0} role="button" className="btn btn-ghost">
-      {/*  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg> */}
         <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
       </div>
 
