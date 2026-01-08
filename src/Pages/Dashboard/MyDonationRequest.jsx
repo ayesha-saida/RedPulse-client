@@ -22,11 +22,11 @@ const MyDonationRequest = () => {
         <p className='py-2'>Total Request: {donations.length} </p>
 
        <form className='filter py-3 space-x-3'>
-          <input className="btn btn-square" type="reset" value="×"/>
-          <input className="btn" type="checkbox" name="status" aria-label="Pending"/>
-          <input className="btn" type="checkbox" name="status" aria-label="Inprogress"/>
-          <input className="btn" type="checkbox" name="status" aria-label="Done"/>
-          <input className="btn" type="checkbox" name="status" aria-label="Canceled"/>
+          <input className="btn btn-square bg-red-600 text-white" type="reset" value="×"/>
+          <input className="btn btn-primary" type="checkbox" name="status" aria-label="Pending"/>
+          <input className="btn btn-warning text-white" type="checkbox" name="status" aria-label="Inprogress"/>
+          <input className="btn btn-success text-white" type="checkbox" name="status" aria-label="Done"/>
+          <input className="btn btn-error text-white" type="checkbox" name="status" aria-label="Canceled"/>
       </form>
 
 
