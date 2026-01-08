@@ -21,46 +21,45 @@ const MyDonationRequest = () => {
         <h1 className='text-4xl py-2'>My Recent Donation Request</h1>
         <p className='py-2'>Total Request: {donations.length} </p>
 
+       <form className='filter py-3 space-x-3'>
+          <input className="btn btn-square" type="reset" value="×"/>
+          <input className="btn" type="checkbox" name="status" aria-label="Pending"/>
+          <input className="btn" type="checkbox" name="status" aria-label="Inprogress"/>
+          <input className="btn" type="checkbox" name="status" aria-label="Done"/>
+          <input className="btn" type="checkbox" name="status" aria-label="Canceled"/>
+      </form>
 
-         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"> 
-    {
-      donations.map((donation) => (
-              <div key={donation._id} className="bg-white rounded-xl shadow-md p-5 w-full max-w-sm">
-      <h2 className="text-xl font-semibold text-red-700 mb-3">
-        {donation.recipientName}
-      </h2>
-      
-      <div className="space-y-2 text-gray-700">
-        <p>
-          <span className="font-medium">Location:</span> 
-          {donation.location}
-        </p>
-        <p>
-          <span className="font-medium">Blood Group:</span>
-          <span className="text-red-600 font-bold"> {donation.bloodGroup} </span>
-        </p>
-          <p>
-          <span className="font-medium">Date:</span> {donation.donationDate}
-        </p>
-        <p>
-          <span className="font-medium">Time:</span> {donation.donationTime}
-        </p>
-      </div>
 
-      <button
-      
-        className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition"
-      >
-        View
-      </button>
-    </div>
-
-      ))
-    }
+        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+  <table className="table table-xs">
+    <thead>
+      <tr className="bg-base-200">
+        <th></th>
+        <th>Recepient Name</th>
+        <th>Location</th>
+        <th>Blood Group</th>
+        <th>Donation Date</th>
+        <th>Donation Time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+   { donations.map((donation, i) =>
+   (<tr key={donation._id}>
+        <th>{i+1}</th>
+        <td>{donation.recipientName}</td>
+        <td>{donation.location}</td>
+        <td>{donation.bloodGroup}</td>
+        <td>{donation.donationDate}  </td>
+        <td>{donation.donationTime}</td>
+        <td className='btn bg-[#f00505] hover:bg-red-700 text-white p-4 m-3'>View</td>
+      </tr>  ) 
+  )}
    
-
- </div>
-        
+    </tbody>
+  </table>
+</div>
+           
     </div>
   )
 }
