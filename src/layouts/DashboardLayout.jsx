@@ -4,6 +4,7 @@ import { MdHomeFilled } from 'react-icons/md'
 import { Link, Outlet } from 'react-router'
 import DashboardBanner from '../shared components/DashboardBanner'
 import { RiHeartAdd2Fill } from 'react-icons/ri'
+import { BiSolidDonateHeart } from 'react-icons/bi'
 
 const DashboardLayout = () => {
   return (
@@ -60,9 +61,16 @@ const DashboardLayout = () => {
           </li>
 
          <li>         
-          <Link to={'/dashboard/create-donation-request'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Donation Request">
+          <Link to={'/dashboard/create-donation-request'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip=" Create Donation Request">
           <RiHeartAdd2Fill />
-          <span className="is-drawer-close:hidden"> Donation Request </span> 
+          <span className="is-drawer-close:hidden">Create Donation Request </span> 
+         </Link>
+          </li>
+
+         <li>         
+          <Link to={'/dashboard/my-donation-requests'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Donation Request">
+          <BiSolidDonateHeart />
+          <span className="is-drawer-close:hidden"> My Donation Request </span> 
          </Link>
           </li>
 

@@ -57,10 +57,10 @@ const DonationRequest = () => {
               }
               console.log('Create Donation:',createDonation)
 
-           const dbRes = await axiosSecure.post('/donation', createDonation)    
+           const dbRes = await axiosSecure.post('/donations', createDonation)    
 
             successToast('Donation Request Created')
-                  navigate(location.state || '/')
+                  navigate(location.state || '/dashboard/my-donation-requests')
             } 
                  catch (error) {
                           console.log(error)
