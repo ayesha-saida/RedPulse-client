@@ -8,6 +8,7 @@ import SignUp from "../Pages/Authentication/SignUp";
 import Search from "../Pages/search/Search";
 import UsersManagement from "../Pages/Dashboard/UsersManagement";
 import Profile from "../Pages/Dashboard/Profile";
+import DonationRequest from "../Pages/Dashboard/DonationRequest";
 
 
 export const router = createBrowserRouter([
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
         {
             path: 'profile',
             element: <Profile />
+        } ,
+        {
+            path: 'create-donation-request',
+            element:  <DonationRequest /> 
         } ,
 
     ]

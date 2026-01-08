@@ -3,6 +3,7 @@ import { FaUser, FaUsers } from 'react-icons/fa'
 import { MdHomeFilled } from 'react-icons/md'
 import { Link, Outlet } from 'react-router'
 import DashboardBanner from '../shared components/DashboardBanner'
+import { RiHeartAdd2Fill } from 'react-icons/ri'
 
 const DashboardLayout = () => {
   return (
@@ -55,6 +56,13 @@ const DashboardLayout = () => {
           <Link to={'/dashboard/profile'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile">
           <FaUser />
           <span className="is-drawer-close:hidden"> Profile </span> 
+         </Link>
+          </li>
+
+         <li>         
+          <Link to={'/dashboard/create-donation-request'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Donation Request">
+          <RiHeartAdd2Fill />
+          <span className="is-drawer-close:hidden"> Donation Request </span> 
          </Link>
           </li>
 
