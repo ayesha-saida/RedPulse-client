@@ -10,6 +10,7 @@ import UsersManagement from "../Pages/Dashboard/UsersManagement";
 import Profile from "../Pages/Dashboard/Profile";
 import DonationRequest from "../Pages/Dashboard/DonationRequest";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
+import PrivateRouter from "./PrivateRouter";
 
 
 export const router = createBrowserRouter([
@@ -53,7 +54,7 @@ export const router = createBrowserRouter([
         } ,
         {
             path: 'profile',
-            element: <Profile />
+            element: <PrivateRouter> <Profile />  </PrivateRouter>
         } ,
         {
             path: 'create-donation-request',
