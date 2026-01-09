@@ -1,6 +1,7 @@
 import React from 'react'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router'
 
 const MyDonationRequest = () => {
 
@@ -50,9 +51,11 @@ const MyDonationRequest = () => {
         <td>{donation.recipientName}</td>
         <td>{donation.location}</td>
         <td>{donation.bloodGroup}</td>
-        <td>{donation.donationDate}  </td>
+        <td>{donation.donationDate} </td>
         <td>{donation.donationTime}</td>
-        <td className='btn bg-[#f00505] hover:bg-red-700 text-white p-4 m-3'>View</td>
+        <td>
+           <Link to={`/dashboard/donation-requests/${donation._id}`} className='btn bg-[#f00505] hover:bg-red-700 text-white p-4 m-3'>View</Link>
+        </td>
       </tr>  ) 
   )}
    
