@@ -1,16 +1,19 @@
-import React, { useState }  from 'react'
+import React, { useContext, useState }  from 'react'
 import { useParams } from 'react-router'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query'
 import { useSharedStates } from '../../Shared states/SharedStates'
 import Loading from '../../shared components/Loading'
+import { AuthContext } from '../Context/AuthProvider'
+import Swal from 'sweetalert2'
 
 const DonationDetails = () => {
     const {id} = useParams()
-   
+    //const [isModalOpen, setIsModalOpen] = useState(false)
+    const {user} = useContext(AuthContext)
     const axiosSecure = useAxiosSecure()
 
-    const {data: donations = [], isLoading, isError } = useQuery({
+    const {refetch, data: donations = [], isLoading, isError } = useQuery({
       queryKey: ['donation', id],
       queryFn: async() => {
         const res = await         
@@ -18,6 +21,10 @@ const DonationDetails = () => {
           return res.data
        }      
      })
+
+     const [formData, setFormData] = useState({
+                   status: "inprogress"
+        });
 
       const {bloodGroup, district, upazila} = useSharedStates()
        const districtName = district.find(
@@ -47,6 +54,20 @@ const DonationDetails = () => {
 
   if (isError) {
     return <div className="text-center py-10 text-red-500">Failed to load data</div>
+  }
+
+  const confirmDonation = async() => {
+    try {
+          await axiosSecure.patch(`/donations/${id}`, formData)
+          Swal.fire('Thanks for your participation', 'Donation Inprogress!', 'success')
+          refetch()  
+           console.log("Saved data:", formData);
+        } 
+
+         catch (err) {
+          console.error(err)
+          Swal.fire('Error', 'Failed to Confirm', 'error')
+        }
   }
 
   return (
@@ -98,12 +119,27 @@ const DonationDetails = () => {
           </p>
         </section>
 
-         {/* Donate Button */}
+         {/* Donate Button onClick open a modal */}
         <button
-          className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition"
-        >
+          onClick={()=>document.getElementById('modal').showModal()}
+          className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition">
            Donate Blood
         </button>
+
+        {/* Donation confirmation modal */}
+   <dialog id="modal" className="modal modal-bottom sm:modal-middle">
+    <div className="modal-box">
+     <h3 className="font-bold text-lg py-2">Are you Sure about the donation?</h3>
+      <p className="py-1">Donor Name: {user.displayName} </p>
+      <p className="py-1">Donor Email: {user.email} </p>
+    <div className="modal-action">
+      <form method="dialog" className='space-x-4'>
+        <button className="btn btn-success text-black" onClick={confirmDonation}> Confirm </button>
+        <button className="btn btn-error text-black"> Cancel</button>
+       </form>
+     </div>
+     </div>
+   </dialog>
 
     </div>
   )
