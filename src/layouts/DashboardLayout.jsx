@@ -5,6 +5,7 @@ import { Link, Outlet } from 'react-router'
 import DashboardBanner from '../shared components/DashboardBanner'
 import { RiHeartAdd2Fill } from 'react-icons/ri'
 import { BiSolidDonateHeart } from 'react-icons/bi'
+import { TbDropletHeart } from 'react-icons/tb'
 
 const DashboardLayout = () => {
   return (
@@ -77,7 +78,14 @@ const DashboardLayout = () => {
           <li>
           <Link to={'/dashboard/all-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users"> 
           <FaUsers />
-          <span> All Users </span>
+          <span  className="is-drawer-close:hidden"> All Users </span>
+          </Link>
+          </li>
+
+          <li>
+          <Link to={'/dashboard/all-blood-donation-request'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Blood Donation Request"> 
+          <TbDropletHeart />
+          <span  className="is-drawer-close:hidden"> All Blood Donation Request </span>
           </Link>
           </li>
 
