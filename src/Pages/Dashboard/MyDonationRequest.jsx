@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router'
+import { AuthContext } from '../Context/AuthProvider'
+import Loading from '../../shared components/Loading'
 
 const MyDonationRequest = () => {
-
+    const {user} = useContext(AuthContext)
     const axiosSecure = useAxiosSecure()
     const [selectedStatus, setSelectedStatus] = useState([]) // track selected filters
 
-    const {data: donations = [] } = useQuery({
-      queryKey: ['donation'],
+    const {data: donations = [] , isLoading } = useQuery({
+      queryKey: ['donation', user?.email],
+      enabled: !!user?.email,
       queryFn: async() => {
         const res = await 
-        axiosSecure.get(`/donations`)
+        axiosSecure.get(`/donations?requesterEmail=${user.email}`)
           return res.data
       }
      })
@@ -26,16 +29,23 @@ const MyDonationRequest = () => {
       }
     }
 
+     if (isLoading)  return <Loading />
+     
+    const myDonations = donations 
+
+  if(myDonations.length === 0)
+    return <p className='text-red-500 text-2xl text-center py-12'> No Donation Request Created yet </p>
+     
     const filteredDonations = selectedStatus.length 
-    ? donations.filter(d => selectedStatus.includes(d.status)) 
-    : donations
+    ? myDonations.filter(d => selectedStatus.includes(d.status)) 
+    : myDonations
 
   return (
   <div className='w-11/12 mx-auto  p-4 space-y-4'>
         <h1 className='text-4xl py-2'>My Recent Donation Request</h1>      
 
    <div className='flex justify-around'>
-      <p className='text-xl py-4'>Total Request: {donations.length} </p>
+      <p className='text-xl py-4'>Total Request: {myDonations.length} </p>
   
    <form className='filter py-3 space-x-3'>
       <input 
