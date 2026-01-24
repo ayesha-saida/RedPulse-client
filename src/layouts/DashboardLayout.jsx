@@ -6,8 +6,11 @@ import DashboardBanner from '../shared components/DashboardBanner'
 import { RiHeartAdd2Fill } from 'react-icons/ri'
 import { BiSolidDonateHeart } from 'react-icons/bi'
 import { TbDropletHeart } from 'react-icons/tb'
+import useRole from '../Hooks/useRole'
 
 const DashboardLayout = () => {
+  const {role} = useRole()
+  console.log(role)
   return (
  <div className="drawer lg:drawer-open">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -75,20 +78,32 @@ const DashboardLayout = () => {
          </Link>
           </li>
 
-          <li>
-          <Link to={'/dashboard/all-users'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users"> 
-          <FaUsers />
-          <span  className="is-drawer-close:hidden"> All Users </span>
-          </Link>
-          </li>
+          <>
+                {/* Admin only */}
+           {  role === 'admin' && (
+         <li>
+         <Link
+        to="/dashboard/all-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+        data-tip="All Users">
+        <FaUsers />
+        <span className="is-drawer-close:hidden"> All Users </span>
+         </Link>
+        </li>
+         )}
 
-          <li>
-          <Link to={'/dashboard/all-blood-donation-request'} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Blood Donation Request"> 
-          <TbDropletHeart />
-          <span  className="is-drawer-close:hidden"> All Blood Donation Request </span>
-          </Link>
-          </li>
-
+            {/* Admin + Volunteer */}
+       {(role === 'admin' || role === 'volunteer') && (
+       <li>
+      <Link
+        to="/dashboard/all-blood-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right"    
+        data-tip="All Blood Donation Request">
+        <TbDropletHeart />
+        <span className="is-drawer-close:hidden">  All Blood Donation Request  </span>
+      </Link>
+       </li>
+       )}
+       </>
+       
             </ul>
          </div>
        </div>
