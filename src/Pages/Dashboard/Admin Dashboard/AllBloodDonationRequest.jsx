@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import useAxiosSecure from '../../../Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router'
+import Swal from 'sweetalert2'
 
 const AllBloodDonationRequest = () => {
   
     const axiosSecure = useAxiosSecure()
     const [selectedStatus, setSelectedStatus] = useState([]) // track selected filters
 
-    const {data: donations = [] } = useQuery({
+    const {data: donations = [], refetch } = useQuery({
       queryKey: ['donation'],
       queryFn: async() => {
         const res = await 
@@ -26,9 +27,28 @@ const AllBloodDonationRequest = () => {
       }
     } 
 
+    const updateDonationStatus = (e, donation) => {
+       const statusInfo = e.target.value
+       
+        axiosSecure.patch(`/donations/${donation._id}/status`,{ status: statusInfo})
+               .then(res => {
+                       console.log(res.data);
+                  if (res.data.modifiedCount) {
+                          refetch();
+                     Swal.fire({
+                     title: `Blood Donation request for ${donation.recipientName} is ${statusInfo}`,
+                      icon: "success",
+                     draggable: true
+               });
+                  }
+               })
+          }
+
     const filteredDonations = selectedStatus.length 
      ? donations.filter(d => selectedStatus.includes(d.status)) 
        : donations
+
+
 
   return (
   <div className='w-11/12 mx-auto p-4 space-y-4'> 
@@ -93,6 +113,7 @@ const AllBloodDonationRequest = () => {
         <th>Blood Group</th>
         <th>Donation Date</th>
         <th>Donation Time</th>
+        <th>Donation Staus</th>
         <th></th>
       </tr>
     </thead>
@@ -105,6 +126,16 @@ const AllBloodDonationRequest = () => {
         <td>{donation.bloodGroup}</td>
         <td>{donation.donationDate} </td>
         <td>{donation.donationTime}</td>
+        <td>
+           <select  className="select" defaultValue={donation.status}
+           onChange={(e) => updateDonationStatus(e,donation)}  >
+
+           <option value={'pending'}> Pending </option> 
+           <option value={'inprogress'}> Inprogress </option> 
+           <option value={'done'}> Done </option>         
+           <option value={'canceled'}> Canceled </option>         
+            </select>
+        </td>
         <td>
            <Link to={`/dashboard/donation-requests/${donation._id}`} className='btn bg-[#f00505] hover:bg-red-700 text-white p-4 m-3'>View</Link>
         </td>
