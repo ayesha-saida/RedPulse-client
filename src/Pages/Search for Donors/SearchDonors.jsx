@@ -6,26 +6,34 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import Loading from '../../shared components/Loading'
 
 const SearchDonors = () => {
-    const {bloodGroup , district, upazila} = useSharedStates()
-     const { register,  watch, setValue, handleSubmit } = useForm()
+  
+    // Shared static data (blood groups, districts, upazilas)
+  const {bloodGroup , district, upazila} = useSharedStates()
+    
+    // React Hook Form for managing search form state 
+    const { register,  watch, setValue, handleSubmit } = useForm()
      const axiosSecure = useAxiosSecure()
 
+       // Stores submitted search parameters (used to trigger query)
      const [searchParams, setSearchParams] = useState(null)
+
+      // Controls conditional rendering (hide table before first search) 
      const [hasSearched, setHasSearched] = useState(false);
 
-      // Watch selected district
+      // Watch selected district to control dependent upazila dropdown
            const selectedDistrict = watch("district");
            
-     // Filter upazila based on selected region
+     // Filter upazila based on selected district
             const filteredUpazilas = upazila.filter(
            (u) => u.district_id  ===  (selectedDistrict)   );
            
-    // Reset upazila when district changes
+    // Reset upazila selection whenever district changes
            useEffect(() => {
            setValue("upazila", "");
          }, [selectedDistrict, setValue]) 
-
-         // Search donors data from backend
+       
+    // Fetch filtered donors from backend using TanStack Query
+   // Query runs ONLY after searchParams is set
      const {data: filteredDonors = [] , isLoading } = useQuery({
       queryKey: ['searchdonors', searchParams],
       enabled: !!searchParams,
@@ -36,7 +44,8 @@ const SearchDonors = () => {
       }
      })
 
-       // Submit handler 
+    // Handle search form submission
+   // Triggers React Query by updating searchParams
      const SearchDonors = (formData) => {
           setHasSearched(true);
           setSearchParams(formData)
@@ -59,6 +68,7 @@ const SearchDonors = () => {
              {/* Search form */}
   <form onSubmit={handleSubmit(SearchDonors)}
   className='flex justify-center items-center py-5 space-x-4'>
+              {/* Blood Group Selector */}
   <div> 
   <label className="font-bold"> Blood Group </label>
   <select  {...register("bloodGroup")}  className="select text-black text-lg">  
@@ -68,7 +78,7 @@ const SearchDonors = () => {
     }
 </select>
  </div>
-
+                   {/* District Selector */}
   <div> 
   <label className="font-bold"> District </label>
   <select {...register("district")}  className='select text-black text-lg'>
@@ -77,7 +87,7 @@ const SearchDonors = () => {
     }
   </select>
   </div>
-
+                {/* Upazila Selector (depends on district)  */}
   <div className='space-y-2'> 
   <label className=" font-bold"> Upazila </label>
     <select className='select text-black text-lg' {...register("upazila")}  disabled={!selectedDistrict}>
@@ -87,14 +97,14 @@ const SearchDonors = () => {
     )}
   </select>
   </div>
-
+             {/* Search Button  */}
   <button type='submit' 
    disabled={!watch("bloodGroup") || !watch("district")}
    className="btn text-white mt-4 bg-red-600 hover:bg-red-700"> Search </button>
     </form>
     
 
-      {/* Donor table (only after search) */}       
+      {/* Search result  (only after search) */}       
     {hasSearched && (
       isLoading ? (
             <Loading /> 
