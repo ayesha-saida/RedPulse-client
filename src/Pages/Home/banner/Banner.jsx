@@ -6,7 +6,7 @@ const Banner = () => {
          <StyledWrapper>
       <div className="cards flex flex-col lg:flex-row justify-evenly items-center py-3 space-y-4 lg:space-y-0  lg:py-5">
         <div className="card red">
-          <Link className="tip" to={'/login'}>Join as a donor</Link>
+          <Link className="tip" to={'/register'}>Join as a donor</Link>
         </div>
 
         <div className="card blue">

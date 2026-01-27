@@ -12,6 +12,7 @@ const Navbar = () => {
       const {user, logOut } = useContext(AuthContext);
       const axiosSecure = useAxiosSecure()
 
+      // Fetch current user data
       const { data: users = [], isLoading } = useQuery({
       queryKey: ['users', user?.email],
       enabled: !!user?.email,  
@@ -26,6 +27,7 @@ const Navbar = () => {
 
      const currentUser = users[0];
     
+     // Logout handler
        const handleLogOut = () => {
         logOut().then(() => {
            defaultToast('SignOut from Red Pulse')
@@ -35,25 +37,35 @@ const Navbar = () => {
        });
             }
   
-  const links = <>
-  <li><NavLink>Donate</NavLink></li>
-  <li><NavLink>Funding</NavLink></li>
+     // Conditional navigation links
+      const links = ( <> 
+      { !user && ( <>
+     <li> <NavLink>Donate</NavLink> </li>
+     <li> <NavLink to={'/login'}>Login</NavLink> </li>
+      </>
+    )}
+     <li> <NavLink>Donate</NavLink> </li>
+     <li> <NavLink>Funding</NavLink> </li>
   </>
+  )
+
   return (
  <div className="navbar bg-[#eb2c29] text-white shadow-sm">
+                {/* Navbar Start */}
   <div className="navbar-start">
      <Logo />  
    </div>
-
+                {/* Navbar Center (For Desktop) */}
      <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 text-2xl">
        {links}
     </ul>
   </div>
-  
+                {/* Navbar End */}
    <div  className="navbar-end">
      <div className=" flex gap-2 ">
-
+           
+           {/* Loading State */}
    {user && isLoading && <Loading />}
 
    {/* User Avatar Dropdown */}
@@ -90,7 +102,7 @@ const Navbar = () => {
              z-50 mt-3 w-52 p-2 shadow 
              left-1/2 -translate-x-1/2">
 
-          {links}
+          {links}        
       </ul>
   </div>
 
