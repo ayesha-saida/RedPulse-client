@@ -85,10 +85,10 @@ const SearchDonors = () => {
     
 
       {/* Donor table (only after search) */}       
-{hasSearched && (
-  isLoading ? (
-   <Loading /> 
-  ) : filteredDonors.length > 0 ? (
+    {hasSearched && (
+      isLoading ? (
+            <Loading /> 
+      ) : filteredDonors.length > 0 ? (
      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-5">
       <table className="table table-xs">
       <thead>
@@ -110,15 +110,15 @@ const SearchDonors = () => {
                   <td>{donor.bloodGroup}</td>
                   <td className="text-green-600 font-bold">{donor.status}</td>
                 </tr>        ))}
-    </tbody>
-  </table>
-   </div>   
-  ) : (
+       </tbody>
+      </table>
+     </div>   
+     ) : (
     <p className="text-center text-gray-500 mt-6">
       No donors found.
     </p>
   )
-)}
+   )}
 
 
     </div>
