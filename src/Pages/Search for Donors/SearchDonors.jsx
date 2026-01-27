@@ -25,13 +25,7 @@ const SearchDonors = () => {
            setValue("upazila", "");
          }, [selectedDistrict, setValue]) 
 
-     //  submit handler 
-     const SearchDonors = (formData) => {
-          setHasSearched(true);
-          setSearchParams(formData)
-     }   
-
- 
+         // Search donors data from backend
      const {data: filteredDonors = [] , isLoading } = useQuery({
       queryKey: ['searchdonors', searchParams],
       enabled: !!searchParams,
@@ -41,6 +35,22 @@ const SearchDonors = () => {
           return res.data
       }
      })
+
+       // Submit handler 
+     const SearchDonors = (formData) => {
+          setHasSearched(true);
+          setSearchParams(formData)
+     } 
+
+      // Convert stored district ID to readable district name
+    const getDistrictName = (id) => {
+    return district.find(d => Number(d.id) === Number(id))?.name || "Unknown"
+  }
+
+    // Convert stored upazila ID to readable upazila name
+  const getUpazilaName = (id) => {
+  return upazila.find(u => Number(u.id) === Number(id))?.name || "Unknown"
+  }
 
   return (
     <div className='w-11/12 mx-auto'>
@@ -106,7 +116,7 @@ const SearchDonors = () => {
                 <tr key={donor._id}>
                   <td>{index + 1}</td>
                   <td>{donor.name}</td>
-                  <td>{donor.upazila}, {donor.district}</td>
+                  <td>{getUpazilaName(donor.upazila)}, {getDistrictName(donor.district)}</td>
                   <td>{donor.bloodGroup}</td>
                   <td className="text-green-600 font-bold">{donor.status}</td>
                 </tr>        ))}
@@ -114,7 +124,7 @@ const SearchDonors = () => {
       </table>
      </div>   
      ) : (
-    <p className="text-center text-gray-500 mt-6">
+    <p className="text-center text-gray-500 my-6">
       No donors found.
     </p>
   )
