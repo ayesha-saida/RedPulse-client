@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import Loading from '../../shared components/Loading'
 
-const Search = () => {
+const SearchDonors = () => {
     const {bloodGroup , district, upazila} = useSharedStates()
      const { register,  watch, setValue, handleSubmit } = useForm()
      const axiosSecure = useAxiosSecure()
@@ -125,4 +125,4 @@ const Search = () => {
   )
 }
 
-export default Search
+export default SearchDonors

@@ -5,7 +5,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import SignIn from "../Pages/Authentication/SignIn";
 import SignUp from "../Pages/Authentication/SignUp";
-import Search from "../Pages/search/Search";
+import SearchDonors from "../Pages/Search for Donors/SearchDonors";
 import UsersManagement from "../Pages/Dashboard/UsersManagement";
 import Profile from "../Pages/Dashboard/Profile";
 import DonationRequest from "../Pages/Dashboard/DonationRequest";
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         },
         {
             path: 'search',
-            element: <Search /> 
+            element: <SearchDonors /> 
         },
 
     ]
