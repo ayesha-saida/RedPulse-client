@@ -55,12 +55,16 @@ const StateSection = () => {
  
 const StatCard = ({ value, label, icon }) => {
   return (
-    <div className="bg-gray-100 rounded-lg shadow p-6 text-center hover:scale-105 transition-transform">
-      <div className="text-3xl mb-2">{icon}</div>
-      <h2 className="text-3xl font-bold text-red-600">
+    <div className="bg-gray-100 rounded-lg shadow p-6 text-center hover:scale-105 transition-transform">      
+      <h2 className="text-3xl md:text-4xl font-bold text-red-600">
         {value}
       </h2>
-      <p className="text-gray-600 mt-1 text-lg">{label}</p>
+
+      {/* Icon + Label in one line */}
+      <div className="flex items-center justify-center  mt-3">
+        <span className="text-2xl md:text-3xl">{icon}</span>
+        <p className="text-base md:text-lg font-medium text-gray-700">{label}</p>
+      </div>
     </div>
   )
 }
