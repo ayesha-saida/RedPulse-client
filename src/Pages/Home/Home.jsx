@@ -1,6 +1,7 @@
 import React from 'react'
 import Banner from './banner/Banner'
 import StateSection from './feature/StateSection'
+import Contact from './contact/Contact'
 
 const Home = () => {
   return (
@@ -10,6 +11,9 @@ const Home = () => {
 
      {/* State Section */}
        <StateSection /> 
+
+     {/* Contact Section */}
+       <Contact />
     </div>
   )
 }
