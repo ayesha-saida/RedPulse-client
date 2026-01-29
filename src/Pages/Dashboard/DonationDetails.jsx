@@ -25,6 +25,7 @@ const DonationDetails = () => {
      const [formData, setFormData] = useState({
                    status: "inprogress"
         });
+     const isDisabled =  donations?.status === 'done' || donations?.status === 'canceled' ||  donations?.status === 'inprogress'
 
       const {bloodGroup, district, upazila} = useSharedStates()
        const districtName = district.find(
@@ -121,9 +122,23 @@ const DonationDetails = () => {
 
          {/* Donate Button onClick open a modal */}
         <button
-          onClick={()=>document.getElementById('modal').showModal()}
-          className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition">
-           Donate Blood
+          disabled={isDisabled}
+          onClick={()=> {
+            if (!isDisabled) {
+            document.getElementById('modal').showModal() }              
+          }}
+          className={`w-full font-semibold py-3 rounded-lg transition
+           ${isDisabled
+           ? 'bg-gray-400 cursor-not-allowed'
+           : 'bg-red-600 hover:bg-red-700 text-white'
+           }  `} >
+           { donations?.status === 'done'
+                ? 'Donation Completed'
+                : donations?.status === 'canceled'
+                ? 'Donation Canceled' 
+                : donations?.status === 'inprogress'
+                ? 'Donation is Inprogress' 
+                : 'Donate Blood'}
         </button>
 
         {/* Donation confirmation modal */}
@@ -134,7 +149,7 @@ const DonationDetails = () => {
       <p className="py-1">Donor Email: {user.email} </p>
     <div className="modal-action">
       <form method="dialog" className='space-x-4'>
-        <button className="btn btn-success text-black" onClick={confirmDonation}> Confirm </button>
+        <button className="btn btn-success text-black" onClick={confirmDonation} disabled={isDisabled}> Confirm </button>
         <button className="btn btn-error text-black"> Cancel</button>
        </form>
      </div>
