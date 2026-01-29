@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import { AuthContext } from '../Context/AuthProvider'
 import Loading from '../../shared components/Loading'
-import { data, useLocation, useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { defaultToast, successToast } from '../../shared components/ToastContainer'
+import { useQuery } from '@tanstack/react-query'
 
 const DonationRequest = () => {
    const {bloodGroup , district, upazila} = useSharedStates()
@@ -32,6 +33,16 @@ const DonationRequest = () => {
           setValue("upazila", "");
         }, [selectedDistrict, setValue])
  
+    const {data: userInfo} = useQuery({
+       queryKey: ['users', user?.email],
+      enabled: !!user?.email,
+      queryFn: async() => {
+        const res = await 
+        axiosSecure.get(`/users/${user.email}`)
+          return res.data
+       }
+     }) 
+     // console.log(userInfo.status)
 
       // Return after all hooks called
          if(!user)  return (
@@ -67,6 +78,16 @@ const DonationRequest = () => {
                       defaultToast('Failed to Create Reuest')
                   }  
           }  
+
+      if ( userInfo?.status === 'block') {      
+       return ( <>
+        <div className="h-full flex items-center justify-center">
+           <p className="text-red-500 text-3xl text-center">
+          Sorry! You are not allowed to make any donation request.
+            </p>
+        </div> </> )
+    }
+   
 
   return (
     <div className='w-11/12 mx-auto'>

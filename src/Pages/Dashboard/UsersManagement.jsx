@@ -121,7 +121,7 @@ const UsersManagement = () => {
            onChange={(e) => updateUsersStatus(e,user)}
            >    
            <option value={'active'}> Active </option> 
-           <option value={'Block'}> Block </option>         
+           <option value={'block'}> Block </option>         
             </select>
         </td>  
       </tr> 
