@@ -6,14 +6,14 @@ import { defaultToast } from './ToastContainer'
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../Hooks/useAxiosSecure'
 import Loading from './Loading'
- 
+import defaulImg from '../assets/default-avatar.jpg'
 
 const Navbar = () => {
       const {user, logOut } = useContext(AuthContext);
       const axiosSecure = useAxiosSecure()
 
       // Fetch current user data
-      const { data: users = [], isLoading } = useQuery({
+      const { data: currentUser , isLoading } = useQuery({
       queryKey: ['users', user?.email],
       enabled: !!user?.email,  
       queryFn: async() => {
@@ -24,8 +24,6 @@ const Navbar = () => {
           return res.data
       }
      })
-
-     const currentUser = users[0];
     
      // Logout handler
        const handleLogOut = () => {
@@ -38,14 +36,13 @@ const Navbar = () => {
             }
   
      // Conditional navigation links
-      const links = ( <> 
-      { !user && ( <>
-     <li> <NavLink>Donate</NavLink> </li>
-     <li> <NavLink to={'/login'}>Login</NavLink> </li>
-      </>
-    )}
+      const links = ( <>    
      <li> <NavLink>Donate</NavLink> </li>
      <li> <NavLink>Funding</NavLink> </li>
+
+       { !user && (
+     <li> <NavLink to={'/login'}>Login</NavLink> </li>
+    )}
   </>
   )
 
@@ -75,7 +72,7 @@ const Navbar = () => {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
-            src={currentUser?.photoURL}
+            src={currentUser?.photoURL || defaulImg}
             alt="current user avatar"
             />
         </div>

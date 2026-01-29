@@ -34,7 +34,11 @@ const MyDonationRequest = () => {
     const myDonations = donations 
 
   if(myDonations.length === 0)
-    return <p className='text-red-500 text-2xl text-center py-12'> No Donation Request Created yet </p>
+    return ( <>
+    <div className='h-full flex items-center justify-center'>
+    <p className='text-red-500 text-3xl text-center'> No Donation Request Created yet </p>
+    </div>
+    </> )
      
     const filteredDonations = selectedStatus.length 
     ? myDonations.filter(d => selectedStatus.includes(d.status)) 
