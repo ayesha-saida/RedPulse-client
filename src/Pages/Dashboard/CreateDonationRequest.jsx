@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { defaultToast, successToast } from '../../shared components/ToastContainer'
 import { useQuery } from '@tanstack/react-query'
 
-const DonationRequest = () => {
+const CreateDonationRequest = () => {
    const {bloodGroup , district, upazila} = useSharedStates()
    const { register, handleSubmit, watch, setValue, formState:{ errors }} = useForm()
  
@@ -176,4 +176,4 @@ const DonationRequest = () => {
   )
 }
 
-export default DonationRequest
+export default CreateDonationRequest

@@ -8,7 +8,7 @@ import SignUp from "../Pages/Authentication/SignUp";
 import SearchDonors from "../Pages/Search for Donors/SearchDonors";
 import UsersManagement from "../Pages/Dashboard/UsersManagement";
 import Profile from "../Pages/Dashboard/Profile";
-import DonationRequest from "../Pages/Dashboard/DonationRequest";
+import CreateDonationRequest from "../Pages/Dashboard/CreateDonationRequest";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import PrivateRouter from "./PrivateRouter";
 import DonationDetails from "../Pages/Dashboard/DonationDetails";
@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
         } ,
         {
             path: 'create-donation-request',
-            element:  <DonationRequest /> 
+            element:  <CreateDonationRequest /> 
         } ,
         {
             path: 'my-donation-requests',
