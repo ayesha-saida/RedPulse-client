@@ -90,16 +90,20 @@ const CreateDonationRequest = () => {
    
 
   return (
-    <div className='w-11/12 mx-auto'>
-        <h2 className='text-2xl py-3 text-center italic'>Create Donation Request </h2>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <h2 className='text-2xl sm:text-3xl lg:text-4xl py-3 text-center italic'> 
+          Create Donation Request 
+        </h2>
 
-  <div className='flex justify-center items-center'>
-   <form onSubmit={handleSubmit(requestSubmit)} className='text-[#f00505] bg-[#ffdddd]  border-2 border-dashed border-[#f00505] rounded w-xs'>
-    <fieldset className="fieldset  p-4">
+  <div className='flex justify-center'>
+   <form onSubmit={handleSubmit(requestSubmit)} className='w-full md:w-3/4 lg:w-2/3 bg-[#ffdddd] border-2 border-dashed border-[#f00505] rounded p-4 my-4'>
+    <fieldset className="space-y-4">
  
- <div>
+ <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+  <div> 
   <label className="text-xs font-bold"> Requester Name </label>
-  <input type="text"  className="input text-black" value={user.displayName} readOnly />
+  <input type="text"  className="input input-bordered w-full text-black" value={user.displayName} readOnly />
   </div>
 
   <div> 
@@ -107,14 +111,14 @@ const CreateDonationRequest = () => {
   <input type="email"  className="input text-black" value={user.email} readOnly />
   </div>
 
-  <div> 
+  <div className='md:col-span-2'> 
   <label className="text-xs font-bold"> Recipient Name </label>
-  <input type="text"  {...register("name")}  className="input text-black" placeholder="Recipient Name" />
+  <input type="text"  {...register("name")}  className="input input-bordered w-full text-black" placeholder="Recipient Name" />
   </div>
 
   <div> 
   <label className="text-xs font-bold"> Blood Group </label>
-  <select  {...register("bloodGroup")}  className="select text-black">  
+  <select  {...register("bloodGroup")}  className="select input-bordered w-full text-black">  
   <option value=''> Select Blood Group </option>
    { 
   bloodGroup.map( (group,id) =>  <option key={id}> {group.blood_group} </option> )
@@ -124,7 +128,7 @@ const CreateDonationRequest = () => {
 
   <div> 
   <label className="text-xs font-bold"> Recipient District </label>
-  <select {...register("district")}  className='select text-black'>
+  <select {...register("district")}  className='select input-bordered w-full text-black'>
     <option value=''>Select District</option>
    { district.map((district)=> <option key={district.id} value={district.id}>{district.name}</option>)
     }
@@ -133,7 +137,7 @@ const CreateDonationRequest = () => {
 
   <div> 
   <label className="text-xs font-bold"> Recipient Upazila </label>
-    <select className="select text-black" {...register("upazila")}  disabled={!selectedDistrict}>
+    <select className="select input-bordered w-full text-black" {...register("upazila")}  disabled={!selectedDistrict}>
   <option value=''> Select Upazila </option>
     { filteredUpazilas.map( (upazila) => <option key={upazila.id} value={upazila.id}>
     {upazila.name} </option>
@@ -141,32 +145,34 @@ const CreateDonationRequest = () => {
   </select>
   </div>
 
- <div> 
+ <div className='md:col-span-2'> 
   <label className="text-xs font-bold"> Hospital Name </label>
-  <input type="text"  {...register("hospitalName")}   className="input text-black" placeholder="Hospital Name" />
+  <input type="text"  {...register("hospitalName")}   className="input input-bordered w-full text-black" placeholder="Hospital Name" />
  </div>
 
- <div> 
+ <div className='md:col-span-2'> 
   <label className="text-xs font-bold"> Location </label>
-   <textarea  {...register("location")}  className="textarea text-black" placeholder="Location in Details"></textarea>
+   <textarea  {...register("location")}  className="textarea textarea-bordered w-full  text-black" placeholder="Location in Details"></textarea>
  </div> 
 
  <div> 
   <label className="text-xs font-bold"> Donation Date </label>
-  <input type="date"  {...register("donationDate")}   className="input text-black" />
+  <input type="date"  {...register("donationDate")}   className="input input-bordered w-full text-black" />
  </div>
 
  <div>
   <label className="text-xs font-bold"> Donation Time </label>
-  <input type="time"  {...register("donationTime")}   className="input text-black" />
+  <input type="time"  {...register("donationTime")}   className="input input-bordered w-full text-black" />
  </div>
 
- <div>
+ <div className='md:col-span-2'>
   <label className="text-xs font-bold"> Message </label>
- <textarea  {...register("donationMessage")}  className="textarea text-black" placeholder="Share details about the patient and why this blood donation is urgently needed."></textarea>
+ <textarea  {...register("donationMessage")}  className="textarea  textarea-bordered w-full text-black" placeholder="Share details about the patient and why this blood donation is urgently needed."></textarea>
  </div>
 
-  <button className="btn bg-[#eb2c29] text-white mt-4"> Create Request </button>
+</div>
+
+  <button className='btn bg-[#eb2c29] text-white w-full'> Create Request </button>
 
   </fieldset>
     </form>
