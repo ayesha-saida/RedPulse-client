@@ -45,60 +45,99 @@ const MyDonationRequest = () => {
     : myDonations
 
   return (
-  <div className='w-11/12 mx-auto  p-4 space-y-4'>
-        <h1 className='text-4xl py-2'>My Recent Donation Request</h1>      
+  <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6'>
+        <h1 className='text-2xl sm:text-3xl lg:text-4xl text-center py-4 font-semibold'>My Recent Donation Request</h1>      
 
-   <div className='flex justify-around'>
-      <p className='text-xl py-4'>Total Request: {myDonations.length} </p>
-  
-   <form className='filter py-3 space-x-3'>
+   <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
+      <p className='text-lg md:text-xl'>Total Request: {myDonations.length} </p>
+   
+      {/* Donation Status Filtering Form */}
+   <form className='flex flex-wrap gap-2 justify-center md:justify-end'> 
       <input 
-        className="btn btn-primary" 
-        type="checkbox" 
+        className="btn btn-sm md:btn-md btn-primary" 
+        type="radio" 
         value="pending" 
-        checked={selectedStatus.includes('pending')} 
-        onChange={handleStatusChange} 
+        checked={selectedStatus  === 'pending'} 
+        onChange={(e) => setSelectedStatus(e.target.value)} 
         aria-label="Pending"
       />  
    
       <input 
-        className="btn btn-warning text-white" 
-        type="checkbox" 
+        className="btn btn-sm md:btn-md btn-warning text-white" 
+        type="radio" 
         value="inprogress" 
-        checked={selectedStatus.includes('inprogress')} 
-        onChange={handleStatusChange} 
+        checked={selectedStatus  === 'inprogress'} 
+        onChange={(e) => setSelectedStatus(e.target.value)} 
         aria-label="Inprogress"
       />  
    
       <input 
-        className="btn btn-success text-white" 
-        type="checkbox" 
+        className="btn btn-sm md:btn-md btn-success text-white" 
+        type="radio" 
         value="done" 
-        checked={selectedStatus.includes('done')} 
-        onChange={handleStatusChange} 
+        checked={selectedStatus  === 'done'} 
+        onChange={(e) => setSelectedStatus(e.target.value)} 
         aria-label="Done"
       /> 
     
       <input 
-        className="btn btn-error text-white" 
-        type="checkbox" 
+        className="btn btn-sm md:btn-md btn-error text-white" 
+        type="radio" 
         value="canceled" 
-        checked={selectedStatus.includes('canceled')} 
-        onChange={handleStatusChange} 
+        checked={selectedStatus  === 'canceled'} 
+        onChange={(e) => setSelectedStatus(e.target.value)} 
         aria-label="Canceled"
-      />  
-
-      <input 
-      className="btn btn-square bg-red-600 text-white" 
-      type="reset" 
-      value="×"
-      onClick={() => setSelectedStatus([])} 
-    />     
-  </form>
+      />       
+    
+    <button 
+     className="btn btn-sm md:btn-md btn-square bg-red-600 text-white" 
+     type="button"
+     value="×"
+     onClick={() => setSelectedStatus('')}>
+      X
+     </button>
+     </form>
     </div>
 
- <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-   <table className="table table-xs">
+           {/* MOBILE CARD VIEW */}
+      <div className="grid gap-4 md:hidden">
+        {filteredDonations.map(donation => (
+          <div key={donation._id} className="card bg-base-100 shadow-md">
+            <div className="card-body space-y-2">
+              <h3 className="text-lg font-bold">
+                {donation.recipientName}
+              </h3>
+
+              <p><span className="font-semibold">Location:</span> {donation.location}</p>
+              <p><span className="font-semibold">Blood Group:</span> {donation.bloodGroup}</p>
+              <p><span className="font-semibold">Date:</span> {donation.donationDate}</p>
+              <p><span className="font-semibold">Time:</span> {donation.donationTime}</p>
+             
+              <select
+                className="select select-sm w-full"
+                defaultValue={donation.status}
+                onChange={(e) => updateDonationStatus(e, donation)}
+              >
+                <option value="pending">Pending</option>
+                <option value="inprogress">Inprogress</option>
+                <option value="done">Done</option>
+                <option value="canceled">Canceled</option>
+              </select>
+              
+              <Link
+                to={`/dashboard/donation-requests/${donation._id}`}
+                className="btn btn-sm bg-red-600 hover:bg-red-700 text-white w-full"
+              >
+                View
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+          
+         {/* DESKTOP / TABLET TABLE VIEW */}
+ <div className='hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
+   <table className='table table-sm lg:table-md'>
     <thead>
       <tr className="bg-base-200">
         <th></th>
@@ -120,7 +159,7 @@ const MyDonationRequest = () => {
         <td>{donation.donationDate} </td>
         <td>{donation.donationTime}</td>
         <td>
-           <Link to={`/dashboard/donation-requests/${donation._id}`} className='btn bg-[#f00505] hover:bg-red-700 text-white p-4 m-3'>View</Link>
+           <Link to={`/dashboard/donation-requests/${donation._id}`}  className='btn btn-sm md:btn-md bg-red-600 hover:bg-red-700 text-white'>View</Link>
         </td>
       </tr>  ) 
   )}
