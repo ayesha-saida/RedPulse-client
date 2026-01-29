@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../Context/AuthProvider';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 
 const UsersManagement = () => {
-   const {user} = useContext(AuthContext)
    const axiosSecure = useAxiosSecure()
 
    const {refetch, data: users = [] } = useQuery({
@@ -23,7 +21,7 @@ const UsersManagement = () => {
 
          axiosSecure.patch(`/users/${user._id}/role`, {role: roleInfo})   // send role as object
               .then(res => {
-                console.log(res.data);
+               // console.log(res.data);
              if (res.data.modifiedCount) {
                    refetch();
 
@@ -65,14 +63,63 @@ const UsersManagement = () => {
    }
 
   return (
-    <div className='w-11/12 mx-auto'>
-        <h2 className='text-4xl py-4'>Total Users: {users.length} </h2>    
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <h2 className='text-2xl sm:text-3xl lg:text-4xl text-center py-4 font-semibold'>Total Users: {users.length} </h2>    
         
-        <div className="overflow-x-auto">
-  <table className="table border">
+          {/* Mobile Card View */}
+      <div className="grid gap-4 md:hidden">
+        {users.map((user) => (
+          <div key={user._id} className="card bg-base-100 shadow-md">
+            <div className="card-body">
+              <div className="flex items-center gap-3">
+                <div className="avatar">
+                  <div className="mask mask-squircle h-12 w-12">
+                    <img src={user.photoURL} alt="users avatar" />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold">{user.name}</h3>
+                  <p className="text-sm">{user.email}</p>
+                </div>
+              </div>
+
+          <div className="grid grid-cols-2 gap-2 mt-2">
+                <div>
+                  <label className="text-sm font-semibold">Role</label>
+                  <select
+                    className="select select-sm w-full"
+                    value={user.role}
+                    onChange={(e) => updateUserRole(e, user)}
+                  >
+                    <option value="donor">Donor</option>
+                    <option value="volunteer">Volunteer</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>    
+
+            <div>
+                  <label className="text-sm font-semibold">Status</label>
+                  <select
+                    className="select select-sm w-full"
+                    value={user.status}
+                    onChange={(e) => updateUsersStatus(e, user)}
+                  >
+                    <option value="active">Active</option>
+                    <option value="block">Block</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>       
+
+          {/* Desktop / Tablet Table View */}
+  <div className="hidden md:block overflow-x-auto  rounded-box border border-base-content/5 bg-base-100">
+  <table className="table  table-sm lg:table-md">
 
     <thead>
-      <tr>
+      <tr className="bg-base-200">
         <th>
         </th>
         <th>Avatar</th>
@@ -90,16 +137,14 @@ const UsersManagement = () => {
           {index + 1}
         </td>
 
-        <td>
-          <div className="flex items-center gap-3">
+        <td>           
             <div className="avatar">
               <div className="mask mask-squircle h-12 w-12">
                 <img
                   src={user.photoURL}
                   alt="users avatar" />
               </div>
-            </div>
-          </div>
+            </div> 
         </td>
 
         <td> {user.email} </td>
@@ -107,7 +152,7 @@ const UsersManagement = () => {
         <td className='font-semibold'>{user.name}</td>
 
         <td>
-           <select  className="select" defaultValue={user.role}
+           <select  className="select select-sm md:select-md" defaultValue={user.role}
            onChange={(e) => updateUserRole(e,user)}
            >    
            <option value={'donor'}> Donor </option> 
@@ -117,7 +162,7 @@ const UsersManagement = () => {
         </td>
 
         <td>
-           <select  className="select" defaultValue={user.status}
+           <select  className="select select-sm md:select-md" defaultValue={user.status}
            onChange={(e) => updateUsersStatus(e,user)}
            >    
            <option value={'active'}> Active </option> 
@@ -134,5 +179,5 @@ const UsersManagement = () => {
     </div>
   )
 }
-
+ 
 export default UsersManagement
