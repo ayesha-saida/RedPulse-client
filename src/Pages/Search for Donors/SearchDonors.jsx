@@ -62,16 +62,17 @@ const SearchDonors = () => {
   }
 
   return (
-    <div className='w-11/12 mx-auto'>
-     <h2 className='text-2xl py-5 text-center '>Search for Donor </h2>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+     <h2 className='text-2xl sm:text-3xl lg:text-4xl py-5 text-center '>Search for Donor </h2>
 
              {/* Search form */}
   <form onSubmit={handleSubmit(SearchDonors)}
-  className='flex justify-center items-center py-5 space-x-4'>
+  className='grid grid-cols-1 md:grid-cols-4 gap-4 items-end'>
+            
               {/* Blood Group Selector */}
   <div> 
   <label className="font-bold"> Blood Group </label>
-  <select  {...register("bloodGroup")}  className="select text-black text-lg">  
+  <select  {...register("bloodGroup")}  className="select w-full text-black text-lg">  
   <option value=''> Select Blood Group </option>
    { 
   bloodGroup.map( (group) =>  <option key={group.id}  value={group.blood_group}> {group.blood_group} </option> )
@@ -81,7 +82,7 @@ const SearchDonors = () => {
                    {/* District Selector */}
   <div> 
   <label className="font-bold"> District </label>
-  <select {...register("district")}  className='select text-black text-lg'>
+  <select {...register("district")}  className='select w-full text-black text-lg'>
     <option value=''>Select District</option>
    { district.map((district)=> <option key={district.id} value={district.id}>{district.name}</option>)
     }
@@ -90,7 +91,7 @@ const SearchDonors = () => {
                 {/* Upazila Selector (depends on district)  */}
   <div className='space-y-2'> 
   <label className=" font-bold"> Upazila </label>
-    <select className='select text-black text-lg' {...register("upazila")}  disabled={!selectedDistrict}>
+    <select className='select w-full text-black text-lg' {...register("upazila")}  disabled={!selectedDistrict}>
     <option value=''> Select Upazila </option>
     { filteredUpazilas.map( (upazila) => <option key={upazila.id} value={upazila.id}>
     {upazila.name} </option>
@@ -100,7 +101,7 @@ const SearchDonors = () => {
              {/* Search Button  */}
   <button type='submit' 
    disabled={!watch("bloodGroup") || !watch("district")}
-   className="btn text-white mt-4 bg-red-600 hover:bg-red-700"> Search </button>
+   className="btn bg-red-600 hover:bg-red-700 text-white w-full"> Search </button>
     </form>
     
 
@@ -109,37 +110,54 @@ const SearchDonors = () => {
       isLoading ? (
             <Loading /> 
       ) : filteredDonors.length > 0 ? (
-     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-5">
-      <table className="table table-xs">
-      <thead>
-      <tr className="bg-base-200">
-        <th></th>
-        <th>Recepient Name</th>
-        <th>Donor Location</th>
-        <th>Blood Group</th>
-        <th>Donation Staus</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-     {filteredDonors.map((donor, index) => (
-                <tr key={donor._id}>
-                  <td>{index + 1}</td>
-                  <td>{donor.name}</td>
-                  <td>{getUpazilaName(donor.upazila)}, {getDistrictName(donor.district)}</td>
-                  <td>{donor.bloodGroup}</td>
-                  <td className="text-green-600 font-bold">{donor.status}</td>
-                </tr>        ))}
-       </tbody>
-      </table>
-     </div>   
-     ) : (
-    <p className="text-center text-gray-500 my-6">
-      No donors found.
-    </p>
-  )
-   )}
 
+    <>
+         {/* Mobile Cards */}
+            <div className="grid gap-4 my-6 md:hidden">
+              {filteredDonors.map((donor) => (
+                <div key={donor._id} className="card bg-base-100 shadow-md">
+                  <div className="card-body">
+                    <h3 className="font-bold text-lg">{donor.name}</h3>
+                    <p><span className="font-semibold">Location:</span> {getUpazilaName(donor.upazila)}, {getDistrictName(donor.district)}</p>
+                    <p><span className="font-semibold">Blood Group:</span> {donor.bloodGroup}</p>
+                    <p className="text-green-600 font-bold">{donor.status}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Table for Tablet & Desktop */}
+            <div className="hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-5">
+              <table className="table table-xs w-full">
+                <thead>
+                  <tr className="bg-base-200">
+                    <th></th>
+                    <th>Recipient Name</th>
+                    <th>Donor Location</th>
+                    <th>Blood Group</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                   {filteredDonors.map((donor, index) => (
+                    <tr key={donor._id}>
+                      <td>{index + 1}</td>
+                      <td>{donor.name}</td>
+                      <td>{getUpazilaName(donor.upazila)}, {getDistrictName(donor.district)}</td>
+                      <td>{donor.bloodGroup}</td>
+                      <td className="text-green-600 font-bold">{donor.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+      </> )
+      : (
+        <p className="text-center text-gray-500 my-6">
+            No donors found.
+          </p>
+      )
+   )}
 
     </div>
   )
