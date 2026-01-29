@@ -35,19 +35,23 @@ const SignIn = () => {
     <fieldset className="fieldset border-2 border-dashed border-[#f00505] rounded w-xs p-4">
 
   {/*email */}
+  <div>
   <label className="text-xs font-bold">Email</label>
   <input type="email"  {...register('email', {required: true})}  className="input" placeholder="Email" />
 
    {
    errors.email?.type === 'required' && <span className='text-[#6e1515]'> Email is required</span>
   }
+    </div>
 
   {/*password*/}
+  <div>
   <label className="text-xs font-bold">Password</label>
   <input type="password" {...register('password', {required: true, 
     minLength:6 })}  className="input" placeholder="Password" />
 
    {errors.password?.type ==='minLength' && <span className='text-[#6e1515]'>Password must be 6 characters or longer</span>}
+</div>
 
   <button className="btn bg-[#eb2c29] text-white mt-4">Login</button>
 

@@ -88,35 +88,46 @@ const SignUp = () => {
   }
 
   return (
-     <div className='w-11/12 mx-auto'>
-        <h1 className='text-2xl text-center font-semibold pt-7 px-2 italic -mx-2'>Welcome! Please Register to Access Our Blood Donation Services</h1>
+     <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <h1 className='text-2xl text-center font-semibold pt-7 px-2 italic '>
+          Welcome! Please Register to Access Our Blood Donation Services
+        </h1>
    
-  <div className='flex flex-col justify-center items-center py-5'> 
-      <form onSubmit={handleSubmit(registerSubmit)} className='text-[#f00505] bg-[#ffdddd]'>
-        <fieldset className="fieldset border-2 border-dashed border-[#f00505] rounded w-xs p-4">
+  <div className='flex justify-center items-center py-5'> 
+      <form onSubmit={handleSubmit(registerSubmit)} 
+       className='w-full max-w-2xl text-[#f00505] bg-[#ffdddd] rounded'>
+        <fieldset className="border-2 border-dashed border-[#f00505] rounded p-4">
    
+   <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+
        {/*name field */}
+    <div>
   <label className="text-xs font-bold">Name</label>
-  <input type="text" className="input" {...register("name",{ required: true, maxLength: 20, minLength:4 })} placeholder="Enter your Name" required />
+  <input type="text" className="input w-full" {...register("name",{ required: true, maxLength: 20, minLength:4 })} placeholder="Enter your Name" required />
 
     {errors.name?.type==='required' && <span className='text-[#6e1515]'>Name is required</span>}
     {errors.name?.type ==='minLength' && <span className='text-[#6e1515]'>Name must be 4 characters or longer</span>}
     {errors.name?.type ==='maxLength' && <span className='text-[#6e1515]'>Name must be in 20 characters</span>}
- 
+   </div>
+
       {/*email field */}
+  <div>
   <label className="text-xs font-bold">Email</label>
   <input type="email"  {...register('email', { required: true })} className="input" placeholder="Email" required />
 
    {errors.email?.type==='required' && <span className='text-[#6e1515]'>Email is required</span>}
-   
+   </div>
+
       {/*photo image / user avatar field */}
+      <div> 
   <label className="text-xs font-bold">Photo</label>
   <input type="file"
    className="file-input"
    {...register("avatar", { required: "Avatar is required" })} />
-
+  </div>
 
       {/*blood group selection field */}
+      <div>
   <label className="text-xs font-bold">Blood Group</label>
   <select  {...register("group")}   className="select">  
   <option value=''> Select </option>
@@ -124,16 +135,20 @@ const SignUp = () => {
   bloodGroup.map( (group,id) =>  <option key={id}> {group.blood_group} </option> )
     }
 </select>
+  </div>
 
       {/*district group selection field */}
+      <div>
   <label className="text-xs font-bold">District</label>
   <select  {...register("district")}   className="select">
   <option value=''> Select </option>
   { district.map((district)=> <option key={district.id} value={district.id}>{district.name}</option>)
     }
 </select>
+    </div>
 
       {/*upazila group selection field */}
+      <div>
   <label className="text-xs font-bold">Upazila</label>
   <select  {...register("upazila")}  className="select" disabled={!selectedDistrict}>
   <option value=''> Select </option>
@@ -141,8 +156,10 @@ const SignUp = () => {
     {upazila.name} </option>
   )}
 </select>
+  </div>
 
         {/*password field */}
+        <div>
   <label className="text-xs font-bold">Password</label>
   <input type="password" {...register('password', { 
     required: true,
@@ -154,8 +171,10 @@ const SignUp = () => {
      {errors.password?.type ==='required' && <span className='text-[#6e1515]'>Password is required</span>}
      {errors.password?.type ==='minLength' && <span className='text-[#6e1515]'>Password must be 6 characters or longer</span>}
      {errors.password?.type ==='pattern' && <span className='text-[#6e1515]'>Password must have at least one uppercase, at least one lowercase, at least one number and at least one special characters.  </span>}
+   </div>
 
        {/*confirm password field */}
+       <div>
   <label className="text-xs font-bold">Confirm Password</label>
   <input type="password"  {...register("confirmPassword", {
           required: true,
@@ -167,8 +186,11 @@ const SignUp = () => {
   {  errors.confirmPassword && (
         <span className="text-[#6e1515]">{errors.confirmPassword.message}</span>
       )}
+   </div>
 
-  <button className="btn bg-[#eb2c29] text-white mt-4">Register</button>
+  </div>
+
+  <button className="btn bg-[#eb2c29] text-white w-full mt-4">Register</button>
 
   <p className='pt-2 text-center'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
  </fieldset>
