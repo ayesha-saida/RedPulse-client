@@ -80,7 +80,7 @@ const Profile = () => {
        try {
       // Save data to backend
       await axiosSecure.patch(`/users/${currentUser.email}`, formData)
-      Swal.fire('Success', 'Profile updated!', 'success')
+      Swal.fire('Profile Successfully', 'updated!', 'success')
       setIsEditing(false)
       refetch()  
        console.log("Saved data:", formData);
@@ -104,9 +104,10 @@ const Profile = () => {
 
 
   return (
-    <div className='w-11/12 mx-auto'>
-       <form className="max-w-sm mx-auto space-y-4 border-[#f00505]  p-5 rounded text-[#f00505] bg-[#ffc8d1] ">        
-       <div className='mb-2 text-right'>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+       <form className="w-full  max-w-xl mx-auto space-y-4 mt-6 p-5 rounded bg-[#ffc8d1] border-2 border-[#f00505] text-[#f00505]">        
+       
+       <div className='flex justify-end mb-2 text-right'>
         {!isEditing ? (
           <button onClick={handleEdit}> <FaRegEdit /> </button>
         ) : (
@@ -114,26 +115,33 @@ const Profile = () => {
         )}
       </div>
  
-     <div>
-        <label className="block mb-2.5 text-sm font-medium text-heading">Name</label>
-        <input name='name' type="text" value={currentUser.name} onChange={handleChange} disabled={!isEditing} 
-           className="input" />
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+       <div>
+        <label className="block mb-2 text-sm font-medium text-heading">Name</label>
+        <input name='name' 
+        type="text"
+        value={currentUser.name} 
+        onChange={handleChange} 
+        disabled={!isEditing} 
+        className="input w-full" />
     </div>
 
     <div>
-        <label  className="block mb-2.5 text-sm font-medium text-heading">Email</label>
-        <input type="text" className="input"  
-         value={currentUser.email}   readOnly />
+        <label  className="block mb-2  text-sm font-medium text-heading">Email</label>
+        <input type="text" 
+        className="input w-full"  
+        value={currentUser.email}   readOnly />
     </div>
 
     <div>
-        <label className="block mb-2.5 text-sm font-medium text-heading">District</label>
+        <label className="block mb-2 text-sm font-medium text-heading">District</label>
           <select
                  name="district"
                 value={formData.district}
                 onChange={handleChange}
                 disabled={!isEditing}  
-                 className="input"                               >
+                 className="input w-full"                               >
          <option value="">{districtName}</option>
           {district.map(d => (
            <option key={d.id} value={d.id}>{d.name}</option>
@@ -143,13 +151,13 @@ const Profile = () => {
     </div>
 
     <div>
-        <label className="block mb-2.5 text-sm font-medium text-heading">Upazila</label>          
+        <label className="block mb-2  text-sm font-medium text-heading">Upazila</label>          
                <select
                   name="upazila"
                  value={formData.upazila}
                  onChange={handleChange}
                  disabled={!isEditing } 
-                  className="input" 
+                  className="input w-full" 
                     >
         <option value=""> {upazilaName}</option>
          {upazila.filter(u => u.district_id === formData.district).map(u => (
@@ -161,12 +169,12 @@ const Profile = () => {
 
 
     <div>
-        <label className="block mb-2.5 text-sm font-medium text-heading">Blood Group</label>
+        <label className="block mb-2 text-sm font-medium text-heading">Blood Group</label>
         <select name='bloodGroup'
             value={formData.bloodGroup}
             onChange={handleChange}
             disabled={!isEditing || !formData.bloodGroup}
-            className="input"
+            className="input w-full"
           >
              <option value="">{formData.bloodGroup}</option>
          {(bloodGroup).map(b => (
@@ -174,7 +182,9 @@ const Profile = () => {
         ))}
        
             </select>
-    </div>        
+    </div> 
+
+    </div>       
   </form>
 
     </div>
