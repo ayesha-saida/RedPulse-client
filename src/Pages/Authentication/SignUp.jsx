@@ -103,7 +103,7 @@ const SignUp = () => {
        {/*name field */}
     <div>
   <label className="text-xs font-bold">Name</label>
-  <input type="text" className="input w-full" {...register("name",{ required: true, maxLength: 20, minLength:4 })} placeholder="Enter your Name" required />
+  <input type="text" className="input w-full text-black" {...register("name",{ required: true, maxLength: 20, minLength:4 })} placeholder="Enter your Name" required />
 
     {errors.name?.type==='required' && <span className='text-[#6e1515]'>Name is required</span>}
     {errors.name?.type ==='minLength' && <span className='text-[#6e1515]'>Name must be 4 characters or longer</span>}
@@ -113,7 +113,7 @@ const SignUp = () => {
       {/*email field */}
   <div>
   <label className="text-xs font-bold">Email</label>
-  <input type="email"  {...register('email', { required: true })} className="input" placeholder="Email" required />
+  <input type="email"  {...register('email', { required: true })} className="input text-black" placeholder="Email" required />
 
    {errors.email?.type==='required' && <span className='text-[#6e1515]'>Email is required</span>}
    </div>
@@ -166,7 +166,7 @@ const SignUp = () => {
     minLength:6,
     pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/ ,
    })} 
-    className="input" placeholder="Password" />
+    className="input text-black" placeholder="Password" />
      
      {errors.password?.type ==='required' && <span className='text-[#6e1515]'>Password is required</span>}
      {errors.password?.type ==='minLength' && <span className='text-[#6e1515]'>Password must be 6 characters or longer</span>}
@@ -181,7 +181,7 @@ const SignUp = () => {
           validate: (value) =>
             value === password || "Passwords do not match",
         })}
-     className="input" placeholder="Confirm Password" />
+     className="input text-black" placeholder="Confirm Password" />
 
   {  errors.confirmPassword && (
         <span className="text-[#6e1515]">{errors.confirmPassword.message}</span>
