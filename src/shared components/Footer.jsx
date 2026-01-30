@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from  '../assets/blood_donation.jpg'
+import { Link } from 'react-router'
 
 const Footer = () => {
   return (
@@ -12,8 +13,8 @@ const Footer = () => {
 
   <div>
     <h6 className="footer-title text-xl font-bold">Services</h6>
-    <a className="link link-hover text-lg">Add Blood Request</a>
-    <a className="link link-hover text-lg">Search Blood Donors </a>
+    <Link to={'/dashboard/create-donation-request'} className="link link-hover text-lg">Add Blood Request</Link>
+    <Link to={'/search'} className="link link-hover text-lg">Search Blood Donors </Link>
   </div>
   </div>
   

@@ -67,7 +67,7 @@ const SearchDonors = () => {
 
              {/* Search form */}
   <form onSubmit={handleSubmit(SearchDonors)}
-  className='grid grid-cols-1 md:grid-cols-4 gap-4 items-end'>
+  className='grid grid-cols-1 md:grid-cols-4 gap-4 items-end my-3'>
             
               {/* Blood Group Selector */}
   <div> 
