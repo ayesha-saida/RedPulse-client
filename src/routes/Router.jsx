@@ -6,13 +6,16 @@ import AuthLayout from "../layouts/AuthLayout";
 import SignIn from "../Pages/Authentication/SignIn";
 import SignUp from "../Pages/Authentication/SignUp";
 import SearchDonors from "../Pages/Search for Donors/SearchDonors";
-import UsersManagement from "../Pages/Dashboard/UsersManagement";
+import UsersManagement from "../Pages/Dashboard/Admin Dashboard/UsersManagement";
 import Profile from "../Pages/Dashboard/Profile";
 import CreateDonationRequest from "../Pages/Dashboard/CreateDonationRequest";
 import MyDonationRequest from "../Pages/Dashboard/MyDonationRequest";
 import PrivateRouter from "./PrivateRouter";
 import DonationDetails from "../Pages/Dashboard/DonationDetails";
 import AllBloodDonationRequest from "../Pages/Dashboard/Admin Dashboard/AllBloodDonationRequest";
+import AdminRoute from "./AdminRoute";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import DonorForbiddenRoute from "./DonorForbiddenRoute";
 
 
 export const router = createBrowserRouter([
@@ -48,11 +51,15 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout /> ,
+    element: <PrivateRouter> <DashboardLayout /> </PrivateRouter>  ,
     children: [
         {
+        index: true,
+        Component: DashboardHome
+        },
+        {
             path: 'all-users',
-            element: <UsersManagement /> 
+            element: <AdminRoute>  <UsersManagement /> </AdminRoute>
         } ,
         {
             path: 'profile',
@@ -72,7 +79,7 @@ export const router = createBrowserRouter([
         } ,
         {
             path: 'all-blood-donation-request',
-            element:  <AllBloodDonationRequest /> 
+            element: <DonorForbiddenRoute>  <AllBloodDonationRequest /> </DonorForbiddenRoute>
         } ,
 
     ]
