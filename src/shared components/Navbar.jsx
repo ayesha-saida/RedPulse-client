@@ -37,6 +37,7 @@ const Navbar = () => {
   
      // Conditional navigation links
       const links = ( <>    
+     <li> <NavLink to={'/'}>Home</NavLink> </li>
      <li> <NavLink>Donate</NavLink> </li>
      <li> <NavLink>Funding</NavLink> </li>
 
