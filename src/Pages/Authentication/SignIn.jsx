@@ -74,7 +74,9 @@ const SignIn = () => {
 
   <button className="btn bg-[#eb2c29] text-white mt-4">Login</button>
 
-    <p className='pt-2 text-center'>Don't have an account? <Link to={'/register'} className='text-primary hover:underline hover:text-blue-500'> Register </Link> </p>
+    <p className='pt-2 text-center'>Don't have an account? <span className=' hover:underline hover:text-blue-500 '>
+       <Link to={'/register'} className='text-primary'> Register </Link> 
+      </span> </p>
   </fieldset>
     </form>
     </div>

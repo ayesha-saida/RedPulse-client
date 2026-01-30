@@ -192,7 +192,10 @@ const SignUp = () => {
 
   <button className="btn bg-[#eb2c29] text-white w-full mt-4">Register</button>
 
-  <p className='pt-2 text-center'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
+  <p className='pt-2 text-center'>Already have an account?
+    <span className='hover:underline hover:text-blue-500'>
+       <Link to={'/login'} className='text-primary'> Login </Link> 
+       </span> </p>
  </fieldset>
       </form>
     </div>

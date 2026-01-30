@@ -16,6 +16,7 @@ import AllBloodDonationRequest from "../Pages/Dashboard/Admin Dashboard/AllBlood
 import AdminRoute from "./AdminRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import DonorForbiddenRoute from "./DonorForbiddenRoute";
+import Funding from "../Pages/Funding/Funding";
 
 
 export const router = createBrowserRouter([
@@ -25,11 +26,15 @@ export const router = createBrowserRouter([
     children: [
         {
             path: '/',
-            element: <Home></Home>
+            element: <Home /> 
         },
         {
             path: 'search',
             element: <SearchDonors /> 
+        },
+        {
+            path: 'funding',
+            element: <PrivateRouter> <Funding /> </PrivateRouter>
         },
 
     ]

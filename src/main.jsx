@@ -6,7 +6,7 @@ import { router } from './routes/Router'
 import AuthProvider from './Pages/Context/AuthProvider'
 import { ToastContainer } from 'react-toastify'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import 'antd/dist/reset.css';
+import 'antd/dist/antd.css'
 
 // Create a client
 const queryClient = new QueryClient()
