@@ -26,6 +26,19 @@ const AdminDashboardHome = () => {
              return res.data
          }
         })
+
+      const {data: funds = [], isLoading: fundingsLoading } = useQuery({
+         queryKey: ['fund'],
+         queryFn: async() => {
+           const res = await 
+           axiosSecure.get(`/funding`)
+             return res.data
+         }
+        })
+
+        // Total funding calculation
+       const totalFund = funds.reduce(
+          (sum, item) => sum + Number(item.donationAmount), 0)
         
   return(
     <div className='max-w-7xl mx-auto p-4 sm:p-6 lg:p-8'>
@@ -53,13 +66,13 @@ const AdminDashboardHome = () => {
         <Card
           style={{
             background: "linear-gradient(180deg, #fca5a5, #ffffff)" }} >
-          <Skeleton loading={statsLoading} active>
+          <Skeleton loading={fundingsLoading} active>
           <Statistic
             title="Total Funding"
-            value={45230}
+            value={fundingsLoading ? 0 : totalFund}
             prefix={<DollarOutlined style={{ color: "#991b1b" }} />}
              styles={{ content: { color: "#450a0a" } }}
-            suffix="USD"
+            suffix="Tk"
           />
           </Skeleton>
         </Card>
@@ -70,7 +83,7 @@ const AdminDashboardHome = () => {
         <Card
           style={{
             background: "linear-gradient(135deg, #fca5a5, #ffffff)" }}>
-          <Skeleton loading={statsLoading} active>
+          <Skeleton loading={donationsLoading} active>
           <Statistic
             title="Blood Donation Requests"
             value={donationsLoading ? 0 : donations.length}
