@@ -21,6 +21,7 @@ import Donate from "../Pages/Donate/Donate";
 import SuccessPage from "../Pages/Donate/SuccessPage";
 import FailedPage from "../Pages/Donate/FailedPage";
 import DonateLayout from "../layouts/DonateLayout";
+import ErrorPage from "../Pages/ErrorPage";
 
 
 export const router = createBrowserRouter([
@@ -111,4 +112,8 @@ export const router = createBrowserRouter([
 
     ]
   },
+    {
+    path: "/*",
+    element:<ErrorPage> </ErrorPage>
+    },
 ]);
