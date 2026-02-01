@@ -7,9 +7,13 @@ const Funding = () => {
     
      <div className='flex justify-evenly space-x-3 pt-3'>
       <h1 className='text-3xl'> Funding Page </h1>
-      <button className='text-xl bg-success text-white p-2 rounded'>
+      
+      <Link to={'/donate'}>
+      <button className='btn text-xl btn-success text-white p-2 rounded'>
         Give Fund 
       </button>
+      </Link>
+      
     </div>
 
            {/* MOBILE CARD VIEW */}
@@ -29,7 +33,7 @@ const Funding = () => {
        </div>
 
            {/* DESKTOP / TABLET TABLE VIEW */}      
-  <div className='hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
+  <div className='hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-3'>
       <table className='table table-sm lg:table-md'>
       <thead>
       <tr className="bg-base-200">

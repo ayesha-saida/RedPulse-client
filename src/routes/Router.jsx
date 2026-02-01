@@ -17,6 +17,7 @@ import AdminRoute from "./AdminRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import DonorForbiddenRoute from "./DonorForbiddenRoute";
 import Funding from "../Pages/Funding/Funding";
+import Donate from "../Pages/Donate/Donate";
 
 
 export const router = createBrowserRouter([
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
         {
             path: 'funding',
             element: <PrivateRouter> <Funding /> </PrivateRouter>
+        },
+        {
+            path: 'donate',
+            element: <Donate /> 
         },
 
     ]
