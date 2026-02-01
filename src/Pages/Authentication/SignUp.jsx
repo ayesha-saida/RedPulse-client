@@ -10,8 +10,8 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const SignUp = () => {
    const navigate = useNavigate()
-  const location = useLocation()
-  console.log('In register page', location)
+   const location = useLocation()
+  // console.log('In register page', location)
 
     const { bloodGroup, district, upazila } = useSharedStates();
 

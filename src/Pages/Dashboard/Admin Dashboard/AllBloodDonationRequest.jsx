@@ -32,7 +32,7 @@ const AllBloodDonationRequest = () => {
        
         axiosSecure.patch(`/donations/${donation._id}/status`,{ status: statusInfo})
                .then(res => {
-                       console.log(res.data);
+                     //  console.log(res.data);
                   if (res.data.modifiedCount) {
                           refetch();
                      Swal.fire({

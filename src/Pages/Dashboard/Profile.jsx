@@ -83,7 +83,7 @@ const Profile = () => {
       Swal.fire('Profile Successfully', 'updated!', 'success')
       setIsEditing(false)
       refetch()  
-       console.log("Saved data:", formData);
+     //  console.log("Saved data:", formData);
     } 
      catch (err) {
       console.error(err)

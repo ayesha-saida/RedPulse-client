@@ -14,7 +14,7 @@ const CreateDonationRequest = () => {
  
    const navigate = useNavigate()
    const location = useLocation()
-   console.log('Donation Request location:', location)
+  //  console.log('Donation Request location:', location)
  
    const {user} = useContext(AuthContext);
 
@@ -47,7 +47,7 @@ const CreateDonationRequest = () => {
       // Return after all hooks called
          if(!user)  return (
          <>       
-           { console.log('data not found')}
+           {/* console.log('data not found') */}
              <Loading /> 
          </> )
          
@@ -66,7 +66,7 @@ const CreateDonationRequest = () => {
                 donationTime: data.donationTime,
                 message: data.donationMessage
               }
-              console.log('Create Donation:',createDonation)
+             // console.log('Create Donation:',createDonation)
 
            const dbRes = await axiosSecure.post('/donations', createDonation)    
 

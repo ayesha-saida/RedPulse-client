@@ -62,7 +62,7 @@ const DonationDetails = () => {
           await axiosSecure.patch(`/donations/${id}`, formData)
           Swal.fire('Thanks for your participation', 'Donation Inprogress!', 'success')
           refetch()  
-           console.log("Saved data:", formData);
+         //  console.log("Saved data:", formData);
         } 
 
          catch (err) {

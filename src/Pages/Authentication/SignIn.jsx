@@ -14,12 +14,12 @@ const SignIn = () => {
    const [loginError, setLoginError] = useState('')
 
   const handleLogin = (data) => {
-    console.log('form data', data)
+   // console.log('form data', data)
     setLoginError('')  // reset previous error
 
      loginUser(data.email, data.password)
      .then(result => {
-     console.log(result.user)
+    // console.log(result.user)
      successToast('login succesfull')
      navigate(location.state || '/')
 
