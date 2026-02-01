@@ -13,9 +13,10 @@ const Donate = () => {
             contributorEmail: form.email.value,
             donationAmount: form.amount.value,
           }
-       console.log(contributorInfo)
-          const res = await axiosSecure.post('/', contributorInfo)
-          console.log(res.data)
+    //   console.log(contributorInfo)
+          const res = await axiosSecure.post('/create-funding-session',
+             contributorInfo)
+         // console.log(res.data)
           window.location.href = res.data.url
     }
 

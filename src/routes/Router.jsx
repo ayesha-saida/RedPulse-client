@@ -18,6 +18,9 @@ import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import DonorForbiddenRoute from "./DonorForbiddenRoute";
 import Funding from "../Pages/Funding/Funding";
 import Donate from "../Pages/Donate/Donate";
+import SuccessPage from "../Pages/Donate/SuccessPage";
+import FailedPage from "../Pages/Donate/FailedPage";
+import DonateLayout from "../layouts/DonateLayout";
 
 
 export const router = createBrowserRouter([
@@ -39,7 +42,21 @@ export const router = createBrowserRouter([
         },
         {
             path: 'donate',
-            element: <Donate /> 
+            element: <DonateLayout />,
+            children: [
+                {
+                    path:'',
+                    element: <Donate />
+                },
+                {
+                    path:'success',
+                    element: <PrivateRouter> <SuccessPage /> </PrivateRouter>
+                },
+                {
+                    path:'cancel',
+                    element: <PrivateRouter> <FailedPage /> </PrivateRouter>
+                },
+            ]
         },
 
     ]
