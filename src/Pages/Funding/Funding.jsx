@@ -1,7 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router'
+import useAxiosSecure from '../../Hooks/useAxiosSecure'
+import { useQuery } from '@tanstack/react-query'
 
 const Funding = () => {
+    const axiosSecure = useAxiosSecure()
+
+     const {data: funds = [] } = useQuery({
+          queryKey: ['fund'],
+          queryFn: async() => {
+            const res = await  axiosSecure.get(`/funding`)
+              return res.data
+          }
+       })
+    
+       const formattedDate = new Date(funds.createdAt).toLocaleDateString();
+            console.log(formattedDate);
+
   return (
  <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6'>
     
@@ -44,14 +59,21 @@ const Funding = () => {
       </tr>
     </thead>
     <tbody>
- 
-  <tr>
-        <th> </th>
-        <td> Donor Name </td>
-        <td> Amount </td>
-        <td> Funding Date </td>
-   
-      </tr>  
+
+   { funds.map((donation, i) =>
+     (<tr key={donation._id}>
+        <th> {i+1} </th>
+        <td> {donation.contributorName} </td>
+        <td> {donation.donationAmount} </td>
+        <td> {new Date(donation.createdAt).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      })}          
+       </td>
+      </tr>  ) 
+   )}  
+
     </tbody>
   </table>
    </div>
