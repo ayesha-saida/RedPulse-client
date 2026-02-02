@@ -10,12 +10,11 @@ const DonationRequest = () => {
      const {data: donations = [], isLoading } = useQuery({
          queryKey: ['donations', 'pending'],
          queryFn: async() => {
-         const res = await  axiosSecure.get('/donations', {
-            params: { status: 'pending' }
-         })
+         const res = await  axiosSecure.get('/donations')
               return res.data
           }
        })
+    const pendingDonations = donations.filter(d => d.status === 'pending');
 
     if(isLoading) return <Loading /> 
 
@@ -27,7 +26,7 @@ const DonationRequest = () => {
         
                  {/* Mobile Card View */}
       <div className="grid gap-4 md:hidden m-4">
-        {donations.map(donation => (
+        {pendingDonations.map(donation => (
           <div key={donation._id} className="card bg-base-100 shadow-md">
             <div className="card-body space-y-2">
               <h3 className="text-lg font-bold">
@@ -65,7 +64,7 @@ const DonationRequest = () => {
               </tr>
             </thead>
             <tbody>
-           { donations.map((donation, i) =>
+           { pendingDonations.map((donation, i) =>
            (<tr key={donation._id}>
                 <th>{i+1}</th>
                 <td>{donation.recipientName}</td>

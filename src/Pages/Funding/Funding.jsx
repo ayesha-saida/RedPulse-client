@@ -48,7 +48,7 @@ const Funding = () => {
        </div>
 
            {/* DESKTOP / TABLET TABLE VIEW */}      
-  <div className='hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-3'>
+  <div className='hidden md:block overflow-x-auto rounded-box border border-gray-400 bg-base-100 my-3'>
       <table className='table table-sm lg:table-md'>
       <thead>
       <tr className="bg-base-200">
