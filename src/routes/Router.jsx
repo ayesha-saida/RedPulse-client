@@ -22,6 +22,7 @@ import SuccessPage from "../Pages/Donate/SuccessPage";
 import FailedPage from "../Pages/Donate/FailedPage";
 import DonateLayout from "../layouts/DonateLayout";
 import ErrorPage from "../Pages/ErrorPage";
+import DonationRequest from "../Pages/Pending Donation/DonationRequest";
 
 
 export const router = createBrowserRouter([
@@ -42,7 +43,11 @@ export const router = createBrowserRouter([
             element: <PrivateRouter> <Funding /> </PrivateRouter>
         },
         {
-            path: 'donate',
+            path: 'blood-donation-request',
+            element: <DonationRequest /> 
+        },
+        { /* Contrubution  funding route */
+            path: 'contribute',
             element: <DonateLayout />,
             children: [
                 {

@@ -23,7 +23,7 @@ const Funding = () => {
      <div className='flex justify-evenly space-x-3 pt-3'>
       <h1 className='text-3xl'> Funding Page </h1>
       
-      <Link to={'/donate'}>
+      <Link to={'/contribute'}>
       <button className='btn text-xl btn-success text-white p-2 rounded'>
         Give Fund 
       </button>

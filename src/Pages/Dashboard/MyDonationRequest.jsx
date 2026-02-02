@@ -48,7 +48,7 @@ const MyDonationRequest = () => {
   <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6'>
         <h1 className='text-2xl sm:text-3xl lg:text-4xl text-center py-4 font-semibold'>My Recent Donation Request</h1>      
 
-   <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
+   <div className='flex flex-row gap-4  md:items-center md:justify-between'>
       <p className='text-lg md:text-xl'>Total Request: {myDonations.length} </p>
    
       {/* Donation Status Filtering Form */}
@@ -112,17 +112,6 @@ const MyDonationRequest = () => {
               <p><span className="font-semibold">Blood Group:</span> {donation.bloodGroup}</p>
               <p><span className="font-semibold">Date:</span> {donation.donationDate}</p>
               <p><span className="font-semibold">Time:</span> {donation.donationTime}</p>
-             
-              <select
-                className="select select-sm w-full"
-                defaultValue={donation.status}
-                onChange={(e) => updateDonationStatus(e, donation)}
-              >
-                <option value="pending">Pending</option>
-                <option value="inprogress">Inprogress</option>
-                <option value="done">Done</option>
-                <option value="canceled">Canceled</option>
-              </select>
               
               <Link
                 to={`/dashboard/donation-requests/${donation._id}`}

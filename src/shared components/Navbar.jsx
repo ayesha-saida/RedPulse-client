@@ -38,7 +38,7 @@ const Navbar = () => {
      // Conditional navigation links
       const links = ( <>    
      <li> <NavLink to={'/'}> Home </NavLink> </li>
-     <li> <NavLink to={'/donate'}> Donate </NavLink> </li>
+     <li> <NavLink to={'/blood-donation-request'}> Donation </NavLink> </li>
      <li> <NavLink to={'/funding'}> Funding </NavLink> </li>
 
        { !user && (
