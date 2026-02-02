@@ -17,10 +17,10 @@ import AdminRoute from "./AdminRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import DonorForbiddenRoute from "./DonorForbiddenRoute";
 import Funding from "../Pages/Funding/Funding";
-import Donate from "../Pages/Donate/Donate";
-import SuccessPage from "../Pages/Donate/SuccessPage";
-import FailedPage from "../Pages/Donate/FailedPage";
-import DonateLayout from "../layouts/DonateLayout";
+import Contribute from "../Pages/Contribute/Contribute";
+import SuccessPage from "../Pages/Contribute/SuccessPage";
+import FailedPage from "../Pages/Contribute/FailedPage";
+import ContributionLayout from "../layouts/ContributionLayout";
 import ErrorPage from "../Pages/ErrorPage";
 import DonationRequest from "../Pages/Pending Donation/DonationRequest";
 
@@ -48,11 +48,11 @@ export const router = createBrowserRouter([
         },
         { /* Contrubution  funding route */
             path: 'contribute',
-            element: <DonateLayout />,
+            element: <ContributionLayout />,
             children: [
                 {
                     path:'',
-                    element: <Donate />
+                    element: <Contribute />
                 },
                 {
                     path:'success',

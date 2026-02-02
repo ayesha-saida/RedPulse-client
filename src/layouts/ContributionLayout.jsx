@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router'
 
-const DonateLayout = () => {
+const ContributionLayout = () => {
   return (
     <div>
         <Outlet /> 
@@ -9,4 +9,4 @@ const DonateLayout = () => {
   )
 }
 
-export default DonateLayout
+export default ContributionLayout

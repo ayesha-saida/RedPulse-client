@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 
-const Donate = () => {
+const Contribute = () => {
     const axiosSecure = useAxiosSecure()
   
     const handleDonation = async (e) => {
@@ -157,4 +157,4 @@ const StyledWrapper = styled.div`
   }`;
 
  
-export default Donate
+export default Contribute
