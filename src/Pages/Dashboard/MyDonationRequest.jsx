@@ -125,7 +125,7 @@ const MyDonationRequest = () => {
 
          {/* Desktop / Tablet Table View*/}
     {filteredDonations.length > 0 && (
-  <div className='hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100'>
+  <div className='hidden md:block overflow-x-auto rounded-box border border-gray-400 bg-base-100'>
     <table className='table table-sm lg:table-md'>
       <thead>
         <tr className="bg-base-200">

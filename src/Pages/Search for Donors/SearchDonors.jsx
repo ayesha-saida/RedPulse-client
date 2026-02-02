@@ -127,7 +127,7 @@ const SearchDonors = () => {
             </div>
 
             {/* Table for Tablet & Desktop */}
-            <div className="hidden md:block overflow-x-auto rounded-box border border-base-content/5 bg-base-100 my-5">
+            <div className="hidden md:block overflow-x-auto rounded-box border border-gray-400 bg-base-100 my-5">
               <table className="table table-xs w-full">
                 <thead>
                   <tr className="bg-base-200">
