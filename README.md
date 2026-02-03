@@ -13,6 +13,13 @@ The system supports **role-based dashboards**, **secure private routes** and **e
 
 ---
 
+## 🚀 Live Demo
+You can view the live version of the frontend here:
+
+🔗 **Live Link:** (https://redpulse-client.web.app)
+
+---
+
 ## 👥 User Roles & Permissions
 
 ### 🔴 Donor 
